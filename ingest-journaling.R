@@ -38,12 +38,12 @@ ingest_journaling <- function(timestamp) {
   h<-content(resp, "text", encoding = "ISO-8859-1", col.names=FALSE, row.names=FALSE)
   data.Journaling <- jsonlite::fromJSON(h)
   data.Journaling <- data.Journaling$data$data
-  head(data.Journaling)
-  dim(data.Journaling)
-  names(data.Journaling)
-  fix(data.Journaling)
+  #head(data.Journaling)
+  #dim(data.Journaling)
+  #names(data.Journaling)
+  #fix(data.Journaling)
   # TO DO: Parse and extract timestamps
   
   # TO DO: Create timeSeries object
-  
+  return(data.Journaling) 
 }
