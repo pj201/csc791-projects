@@ -1,4 +1,9 @@
-# P3 project
+############################################################
+# CSC791 P3: Main function to demonstrate streaming
+# time series analysis techniques in R
+# AUTHOR(S), Last updated: 3/28/2015
+############################################################
+
 # TO DO - add in names etc
 
 library(stats)

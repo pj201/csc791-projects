@@ -1,6 +1,6 @@
 ############################################################
 # CSC791 P3: Function to ingest data from Journaling project
-# Paul Jones, pjones@ncsu.edu, Last updated 3/25/2015
+# Paul Jones, pjones@ncsu.edu, Last updated: 3/25/2015
 ############################################################
 
 #library(Rcurl)

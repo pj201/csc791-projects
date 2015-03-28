@@ -1,3 +1,7 @@
+############################################################
+# CSC791 P3: Function to preprocess data into time series
+# AUTHOR(S), Last updated: 3/28/2015
+############################################################
 
 create_timeseries <- function(df, tsOld, UserAttr, TimeAttr, binSize) {
   
