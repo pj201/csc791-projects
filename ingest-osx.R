@@ -1,6 +1,6 @@
 ############################################################
-# CSC791 P3: Function to ingest data from Journaling project
-# Paul Jones, pjones@ncsu.edu, Last updated: 3/25/2015
+# CSC791 P3: Function to ingest data from OSX Journaling project
+# Kshitij Sharma, ksharma3@ncsu.edu, Last updated: 4/2/2015
 ############################################################
 
 #library(Rcurl)
@@ -9,7 +9,7 @@ library(jsonlite)
 library(httr)
 library(RJSONIO)
 
-# Returns an object containing a time series of CSC791 Journaling data since timestamp
+# Returns an object containing a time series of CSC791 OSX data since timestamp
 ingest_osx <- function(timestamp) {
   
   # Get latest data - equivalent curl command looks like:
