@@ -53,5 +53,5 @@ ingest_osx <- function(timestamp) {
   
   # Just return the data frame (gets converted to a timeSeries object
   # by the create_timeseries function in preprocess.R)
-  return(data.Journaling) 
+  return(data.OSX) 
 }
