@@ -32,8 +32,8 @@ ingest_journaling <- function(timestamp) {
                    "data.ProjId" = "journaling-chrome",
                    "data.UserId" = "pjones",
                    "data.EvtTime" = list(
-                     "$gte" = 1422717200000,
-                     "$lte" = 1424303540000
+                     "$gte" = 1420717200000,
+                     "$lte" = 1428090420000
                    )
                  )
                ))
