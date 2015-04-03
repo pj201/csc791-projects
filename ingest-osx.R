@@ -10,7 +10,7 @@ library(httr)
 library(RJSONIO)
 
 # Returns an object containing a time series of CSC791 OSX data since timestamp
-ingest_osx <- function(timestamp) {
+ingest_osx <- function(fromTimestamp, toTimestamp) {
   
   # Get latest data - equivalent curl command looks like:
   # curl -H "Content-Type: application/json" 
@@ -31,8 +31,8 @@ ingest_osx <- function(timestamp) {
                   "data.ProjId" = "skylr-osx-instrumenter",
                   "data.UserId" = "pjones",
                   "data.EvtTime" = list(
-                    "$gte" = 1423717200000,
-                    "$lte" = 1424303540000
+                    "$gte" = fromTimestamp,
+                    "$lte" = toTimestamp
                   )
                 )
               ))
