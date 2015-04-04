@@ -9,7 +9,7 @@ predict_ets <- function(timeseries) {
 # [NT] Run ets prediction (non-seasonal)
 fit_ets <- ets(timeseries, gamma=FALSE)
 
-# [NT] Plot the Holt-Winters model
+# [NT] Plot the ets model
 #plot(fit_ets)
 
 # [NT] Plot forecasts from the model
