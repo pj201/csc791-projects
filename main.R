@@ -8,7 +8,7 @@
 # Load required libraries and source files
 ############################################################
 
-install.packages("forecast");
+#install.packages("forecast");
 library(forecast)
 library(stats)
 
@@ -18,8 +18,9 @@ setwd(this.dir)
 # Load functions from other files
 source("ingest-journaling.R")
 source("ingest-osx.R")
+#source("ingest-twitter.R")
 source("preprocess.R")
-source("ingest-twitter.R")
+
 
 ############################################################
 # Ingest data and create time series objects
@@ -43,22 +44,24 @@ size <- (presentTime - previousTime)/binSize;
 # new_t_df <- ingest_twitter(t)
 new_osx_df <- ingest_osx(previousTime, presentTime)
 new_j_df <- ingest_journaling(presentTime) 
-new_t_df <- ingest_twitter("BarackObama",100)
+#new_t_df <- ingest_twitter("BarackObama",100)
+
 # I think we should filter out the data and fetch records which are within the 1 min range
 # to avoid re-processing the same data ???
 
 # pre-process to create time series
 new_j_ts <- create_timeseries(new_j_df, tsOld, "UserId", "EvtTime", size)
-new_osx_ts <- create_timeseries(new_osx_df, tsOld, "UserId", "EvtTime", size)
-new_t_ts <- create_timeseries(new_t_df,tsOld,"id","created",size)
+#new_osx_ts <- create_timeseries(new_osx_df, tsOld, "UserId", "EvtTime", size)
+#new_t_ts <- create_timeseries(new_t_df,tsOld,"id","created",size)
 
 #########################################################
 # Run forecasting algorithms
 #########################################################
 
-fit <- ets(new_osx_ts)
-plot(forecast(fit))
+#fit <- ets(new_osx_ts)
+#plot(forecast(fit))
 # Update results in plots
+
 
 # [PJ] Run Holt-Winters prediction (non-seasonal)
 fit_hw <- HoltWinters(new_j_ts, gamma=FALSE)
