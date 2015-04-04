@@ -4,7 +4,7 @@
 # Paul Jones, pjones@ncsu.edu, Last updated: 4/4/2015
 ############################################################
 
-predict_hw <- function(timeseries) {
+predict_hw <- function(timeseries, label="Unspecified") {
 
 # [PJ] Run Holt-Winters prediction (non-seasonal)
 fit_hw <- HoltWinters(timeseries, gamma=FALSE)
@@ -13,7 +13,8 @@ fit_hw <- HoltWinters(timeseries, gamma=FALSE)
 #plot(fit_hw)
 
 # [PJ] Plot forecasts from the model. TODO - explain more.
-plot(forecast(fit_hw))
+t <- paste("HoltWinters Forecasts for dataset",label,sep=" ")
+plot(forecast(fit_hw),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }
 
