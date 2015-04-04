@@ -93,7 +93,8 @@ predict_ets(history_osx_ts, label="OSXInstrumenter")
 ############################################################
 # Ingest continuous streaming data and make forecasts
 ############################################################
-
+cat("Press enter to update the prediction model in real-time")
+t<-readline()
 while(TRUE) {
 
 sleep(5)
