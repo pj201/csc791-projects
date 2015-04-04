@@ -28,66 +28,85 @@ source("predict-hw.R")
 # Ingest data and create time series objects
 ############################################################
 
-#
-presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 # Shouldn't this be inside the loop???
-previousTime<- presentTime  - 2592000000; #timestamp one month in the past
+# Creating sleep function 
+sleep <- function(x)
+{
+  p1 <- proc.time()
+  Sys.sleep(x)
+  proc.time() - p1 # The cpu usage should be negligible
+  
+}
+
+# Present Time stamp object 
+presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
+# Present Time stamp object of one month back
+previousTime<- presentTime  - 2592000000; 
+# Fetch Data from OSX Instruments
 new_osx_df <- ingest_osx(previousTime, presentTime)
+# Fetch Data from Journaling project
 new_j_df <- ingest_journaling(previousTime, presentTime)
+# Fetch Data from Twitter
 #new_t_df <- ingest_twitter("BarackObama",100) 
 
 # Initialise timeseries object
 tsOld <- ts(c(0));
+# Binning data into 1 hour chunks.
 binSize <- 3600000;
+# Calculating number of bins for the historical pull.
 size <- (presentTime - previousTime)/binSize;
 
-# get latest data from all 3 sources
-# new_t_df <- ingest_twitter(t)
+# get historic data from all 3 sources
 tsNull<- ts(c(0));
 history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
 history_osx_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
+#history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 
-predict_hw(history_j_ts)
-predict_hw(history_osx_ts)
+#Creating Holt-Winters model and predicting for journaling project
+predict_hw(history_j_ts, label="Journaling")
+#Creating Holt-Winters model and predicting for osx instruments
+predict_hw(history_osx_ts, label="OSX Instruments")
 
-stop();
+#stop();
 
 # TO DO: Start loop
+while(TRUE) {
 
+sleep(60)
 
-# Wait one hour
+# Wait one min
 # calculating number of bins.
-previousTime <- presentTime - 60000; 
+presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
+previousTime <- presentTime - 5000; 
 size <- (presentTime - previousTime)/binSize;
 
 new_osx_df <- ingest_osx(previousTime, presentTime)
 new_j_df <- ingest_journaling(previousTime, presentTime) 
 #new_t_df <- ingest_twitter("BarackObama",100)
 
-# I think we should filter out the data and fetch records which are within the 1 min range
-# to avoid re-processing the same data ???
-
 # pre-process to create time series
-new_j_ts <- create_timeseries(new_j_df, tsOld, "UserId", "EvtTime", size)
-#new_osx_ts <- create_timeseries(new_osx_df, tsOld, "UserId", "EvtTime", size)
-#new_t_ts <- create_timeseries(new_t_df,tsOld,"id","created",size)
+if(!is.null(new_j_df)) {
+history_j_ts <- create_timeseries(new_j_df, history_j_ts, "UserId", "EvtTime", size)}
+if(!is.null(new_osx_df)) {
+history_osx_ts <- create_timeseries(new_osx_df, history_osx_ts, "UserId", "EvtTime", size)
+}
+#history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 
 #########################################################
 # Run forecasting algorithms
 #########################################################
 
-#fit <- ets(new_osx_ts)
-#plot(forecast(fit))
-# Update results in plots
-
-
-# [PJ] Run Holt-Winters prediction (non-seasonal)
-fit_hw <- HoltWinters(new_j_ts, gamma=FALSE)
-
-# [PJ] Plot the Holt-Winters model
-plot(fit_hw)
-
-# [PJ] Plot forecasts from the model. TODO - explain more.
-plot(forecast(fit_hw))
+#Creating Holt-Winters model and predicting for journaling project
+predict_hw(history_j_ts, label="Journaling")
+#Creating Holt-Winters model and predicting for osx instruments
+predict_hw(history_osx_ts, label="OSX Instruments")
+#Creating Garch model and predicting for journaling project
+predict_garch(history_j_ts, "Journaling")
+#Creating Garch model and predicting for osx instruments
+predict_garch(history_osx_ts, "OSX Instruments")
+#Creating Arima model and predicting for journaling project
+predict_arima(history_j_ts, "Journaling")
+#Creating Arima model and predicting for osx instruments
+predict_arima(history_osx_ts, "OSX Instruments")
 
 # End of loop
-
+}

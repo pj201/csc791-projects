@@ -6,9 +6,9 @@
 create_timeseries <- function(df, tsOld, UserAttr, TimeAttr, binSize) {
   
   # Extract User and Time attributes 
-  df.sub <- subset(df, select = c(UserAttr, TimeAttr))
+  #df.sub <- subset(df, select = c(UserAttr, TimeAttr))
   # Bin the data according to binSize
-  v <-df.sub$EvtTime #above line is redundant.
+  v <-df$EvtTime #above line is redundant.
   r <- tapply(v, cut(v, binSize), length, simplify=FALSE)
   r[sapply(r, is.null)] <- 0
   matrix <- do.call(rbind, r)
