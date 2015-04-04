@@ -76,7 +76,7 @@ sleep(60)
 # Wait one min
 # calculating number of bins.
 presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
-previousTime <- presentTime - 5000; 
+previousTime <- presentTime - 60000; 
 size <- (presentTime - previousTime)/binSize;
 
 new_osx_df <- ingest_osx(previousTime, presentTime)
@@ -96,17 +96,18 @@ history_osx_ts <- create_timeseries(new_osx_df, history_osx_ts, "UserId", "EvtTi
 #########################################################
 
 #Creating Holt-Winters model and predicting for journaling project
+
 predict_hw(history_j_ts, label="Journaling")
 #Creating Holt-Winters model and predicting for osx instruments
 predict_hw(history_osx_ts, label="OSX Instruments")
 #Creating Garch model and predicting for journaling project
-predict_garch(history_j_ts, "Journaling")
+#predict_garch(history_j_ts, "Journaling")
 #Creating Garch model and predicting for osx instruments
-predict_garch(history_osx_ts, "OSX Instruments")
+#predict_garch(history_osx_ts, "OSX Instruments")
 #Creating Arima model and predicting for journaling project
-predict_arima(history_j_ts, "Journaling")
+#predict_arima(history_j_ts, "Journaling")
 #Creating Arima model and predicting for osx instruments
-predict_arima(history_osx_ts, "OSX Instruments")
+#predict_arima(history_osx_ts, "OSX Instruments")
 
 # End of loop
 }
