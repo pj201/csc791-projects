@@ -67,15 +67,15 @@ history_osx_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", siz
 #Creating Holt-Winters model and predicting for journaling project
 predict_hw(history_j_ts, label="Journaling")
 #Creating Holt-Winters model and predicting for osx instruments
-predict_hw(history_osx_ts, label="OSX Instrumenter")
+predict_hw(history_osx_ts, label="OSXInstrumenter")
 #Creating Garch model and predicting for journaling project
-#predict_garch(history_j_ts, "Journaling")
+predict_garch(history_j_ts, label="Journaling")
 #Creating Garch model and predicting for osx instruments
-#predict_garch(history_osx_ts, "OSXInstrumenter")
+predict_garch(history_osx_ts, label="OSXInstrumenter")
 #Creating Arima model and predicting for journaling project
-#predict_arima(history_j_ts, "Journaling")
+predict_arima(history_j_ts, label="Journaling")
 #Creating Arima model and predicting for osx instruments
-#predict_arima(history_osx_ts, "OSXInstrumenter")
+predict_arima(history_osx_ts, label="OSXInstrumenter")
 
 ############################################################
 # Ingest continuous streaming data and make forecasts
@@ -110,13 +110,13 @@ predict_hw(history_j_ts, label="Journaling")
 #Creating Holt-Winters model and predicting for osx instruments
 predict_hw(history_osx_ts, label="OSXInstrumenter")
 #Creating Garch model and predicting for journaling project
-#predict_garch(history_j_ts, "Journaling")
+predict_garch(history_j_ts, label="Journaling")
 #Creating Garch model and predicting for osx instruments
-#predict_garch(history_osx_ts, "OSXInstrumenter")
+predict_garch(history_osx_ts, label="OSXInstrumenter")
 #Creating Arima model and predicting for journaling project
-#predict_arima(history_j_ts, "Journaling")
+predict_arima(history_j_ts, label="Journaling")
 #Creating Arima model and predicting for osx instruments
-#predict_arima(history_osx_ts, "OSXInstrumenter")
+predict_arima(history_osx_ts, label="OSXInstrumenter")
 
 # End of loop
 }
