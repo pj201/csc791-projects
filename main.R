@@ -20,30 +20,47 @@ source("ingest-journaling.R")
 source("ingest-osx.R")
 #source("ingest-twitter.R")
 source("preprocess.R")
-
-
+#source("predict-ets.R")
+#source("predict-arima.R")
+#source("predict-garch.R")
+source("predict-hw.R")
 ############################################################
 # Ingest data and create time series objects
 ############################################################
 
-# Get current timestamp
+#
 presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 # Shouldn't this be inside the loop???
+previousTime<- presentTime  - 2592000000; #timestamp one month in the past
+new_osx_df <- ingest_osx(previousTime, presentTime)
+new_j_df <- ingest_journaling(previousTime, presentTime)
+#new_t_df <- ingest_twitter("BarackObama",100) 
 
 # Initialise timeseries object
-tsOld <- ts(c(0))
+tsOld <- ts(c(0));
+binSize <- 3600000;
+size <- (presentTime - previousTime)/binSize;
+
+# get latest data from all 3 sources
+# new_t_df <- ingest_twitter(t)
+tsNull<- ts(c(0));
+history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
+history_osx_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
+
+predict_hw(history_j_ts)
+predict_hw(history_osx_ts)
+
+stop();
 
 # TO DO: Start loop
 
+
+# Wait one hour
 # calculating number of bins.
 previousTime <- presentTime - 60000; 
 size <- (presentTime - previousTime)/binSize;
 
-# Wait one minute
-
-# get latest data from all 3 sources
-# new_t_df <- ingest_twitter(t)
 new_osx_df <- ingest_osx(previousTime, presentTime)
-new_j_df <- ingest_journaling(presentTime) 
+new_j_df <- ingest_journaling(previousTime, presentTime) 
 #new_t_df <- ingest_twitter("BarackObama",100)
 
 # I think we should filter out the data and fetch records which are within the 1 min range
