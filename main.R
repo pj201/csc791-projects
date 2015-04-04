@@ -43,6 +43,8 @@ presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
 # Present Time stamp object of one month back
 previousTime<- presentTime  - 2592000000; 
 # Fetch Data from OSX Instruments
+cat("Press enter to Fetch Historical data from all 3 sources")
+t<-readline()
 new_osx_df <- ingest_osx(previousTime, presentTime)
 # Fetch Data from Journaling project
 new_j_df <- ingest_journaling(previousTime, presentTime)
@@ -58,24 +60,35 @@ size <- (presentTime - previousTime)/binSize;
 
 # Get historic data from all 3 sources
 tsNull<- ts(c(0));
+cat("Press enter to create time series objects")
+t<-readline()
 history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
 history_osx_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 #history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 
 # Run forecasting algorithms on historic data
-
+cat("Press enter to build prediction model")
+t<-readline()
 #Creating Holt-Winters model and predicting for journaling project
+cat("Building Holt-Winters model")
 predict_hw(history_j_ts, label="Journaling")
 #Creating Holt-Winters model and predicting for osx instruments
 predict_hw(history_osx_ts, label="OSXInstrumenter")
 #Creating Garch model and predicting for journaling project
+cat("Building Garch model")
 predict_garch(history_j_ts, label="Journaling")
 #Creating Garch model and predicting for osx instruments
 predict_garch(history_osx_ts, label="OSXInstrumenter")
+cat("Building Arima model")
 #Creating Arima model and predicting for journaling project
 predict_arima(history_j_ts, label="Journaling")
 #Creating Arima model and predicting for osx instruments
 predict_arima(history_osx_ts, label="OSXInstrumenter")
+cat("Building ETS model")
+#Creating ETS model and predicting for journaling project
+predict_ets(history_j_ts, label="Journaling")
+#Creating ETS model and predicting for osx instruments
+predict_ets(history_osx_ts, label="OSXInstrumenter")
 
 ############################################################
 # Ingest continuous streaming data and make forecasts
@@ -83,7 +96,7 @@ predict_arima(history_osx_ts, label="OSXInstrumenter")
 
 while(TRUE) {
 
-sleep(60)
+sleep(5)
 
 # Wait one min
 # calculating number of bins.
@@ -117,6 +130,9 @@ predict_garch(history_osx_ts, label="OSXInstrumenter")
 predict_arima(history_j_ts, label="Journaling")
 #Creating Arima model and predicting for osx instruments
 predict_arima(history_osx_ts, label="OSXInstrumenter")
-
+#Creating ETS model and predicting for journaling project
+predict_ets(history_j_ts, label="Journaling")
+#Creating ETS model and predicting for osx instruments
+predict_ets(history_osx_ts, label="OSXInstrumenter")
 # End of loop
 }
