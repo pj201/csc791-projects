@@ -19,6 +19,7 @@ setwd(this.dir)
 source("ingest-journaling.R")
 source("ingest-osx.R")
 source("preprocess.R")
+source("ingest-twitter.R")
 
 ############################################################
 # Ingest data and create time series objects
@@ -42,12 +43,14 @@ size <- (presentTime - previousTime)/binSize;
 # new_t_df <- ingest_twitter(t)
 new_osx_df <- ingest_osx(previousTime, presentTime)
 new_j_df <- ingest_journaling(presentTime) 
+new_t_df <- ingest_twitter("BarackObama",100)
 # I think we should filter out the data and fetch records which are within the 1 min range
 # to avoid re-processing the same data ???
 
 # pre-process to create time series
 new_j_ts <- create_timeseries(new_j_df, tsOld, "UserId", "EvtTime", size)
 new_osx_ts <- create_timeseries(new_osx_df, tsOld, "UserId", "EvtTime", size)
+new_t_ts <- create_timeseries(new_t_df,tsOld,"id","created",size)
 
 #########################################################
 # Run forecasting algorithms
