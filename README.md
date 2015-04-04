@@ -19,12 +19,11 @@ Execute the 'main.R' file inside R - this will run the complete demo.
 
 ----------------------------------------------
 
-Project description:
+Project one-sentence description:
 
 Demonstration of four different time series analysis techniques, against
-three different data sets (Tweets from BarackObama, a month's worth of OSX
-OInstrumenter data for pjones, and a month's worth of Journaling data for
-pjones).
+three different data sets (Tweets from BarackObama, a month of OSXInstrumenter
+data for pjones, and a month of Journaling data for pjones).
 
 The time series modelling techniques we've included are:
 
