@@ -10,7 +10,7 @@ library(httr)
 library(RJSONIO)
 
 # Returns an object containing a time series of CSC791 Journaling data since timestamp
-ingest_journaling <- function(timestamp) {
+ingest_journaling <- function(fromTimestamp, toTimestamp) {
   
   # Get latest data - equivalent curl command looks like:
   # curl -H "Content-Type: application/json" 
@@ -32,8 +32,8 @@ ingest_journaling <- function(timestamp) {
                    "data.ProjId" = "journaling-chrome",
                    "data.UserId" = "pjones",
                    "data.EvtTime" = list(
-                     "$gte" = 1420717200000,
-                     "$lte" = 1428090420000
+                     "$gte" = fromTimestamp,
+                     "$lte" = toTimestamp
                    )
                  )
                ))
