@@ -1,7 +1,7 @@
 ############################################################
 # CSC791 P3: Main function to demonstrate streaming
 # time series analysis techniques in R
-# Nitin,Paul,Kshitij,Denil,Preetham. Last updated: 4/3/2015
+# Nitin,Paul,Kshitij,Denil,Preetham. Last updated: 4/4/2015
 ############################################################
 
 ############################################################
@@ -15,19 +15,6 @@ library(stats)
 this.dir <- dirname(parent.frame(2)$ofile)
 setwd(this.dir)
 
-# Load functions from other files
-source("ingest-journaling.R")
-source("ingest-osx.R")
-#source("ingest-twitter.R")
-source("preprocess.R")
-#source("predict-ets.R")
-#source("predict-arima.R")
-#source("predict-garch.R")
-source("predict-hw.R")
-############################################################
-# Ingest data and create time series objects
-############################################################
-
 # Creating sleep function 
 sleep <- function(x)
 {
@@ -36,6 +23,20 @@ sleep <- function(x)
   proc.time() - p1 # The cpu usage should be negligible
   
 }
+
+# Load functions from other files
+source("ingest-journaling.R")
+source("ingest-osx.R")
+#source("ingest-twitter.R")
+source("preprocess.R")
+source("predict-ets.R")
+source("predict-arima.R")
+source("predict-garch.R")
+source("predict-hw.R")
+
+############################################################
+# Ingest historic data and create time series objects
+############################################################
 
 # Present Time stamp object 
 presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
@@ -55,20 +56,31 @@ binSize <- 3600000;
 # Calculating number of bins for the historical pull.
 size <- (presentTime - previousTime)/binSize;
 
-# get historic data from all 3 sources
+# Get historic data from all 3 sources
 tsNull<- ts(c(0));
 history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
 history_osx_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 #history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 
+# Run forecasting algorithms on historic data
+
 #Creating Holt-Winters model and predicting for journaling project
 predict_hw(history_j_ts, label="Journaling")
 #Creating Holt-Winters model and predicting for osx instruments
-predict_hw(history_osx_ts, label="OSX Instruments")
+predict_hw(history_osx_ts, label="OSX Instrumenter")
+#Creating Garch model and predicting for journaling project
+#predict_garch(history_j_ts, "Journaling")
+#Creating Garch model and predicting for osx instruments
+#predict_garch(history_osx_ts, "OSXInstrumenter")
+#Creating Arima model and predicting for journaling project
+#predict_arima(history_j_ts, "Journaling")
+#Creating Arima model and predicting for osx instruments
+#predict_arima(history_osx_ts, "OSXInstrumenter")
 
-#stop();
+############################################################
+# Ingest continuous streaming data and make forecasts
+############################################################
 
-# TO DO: Start loop
 while(TRUE) {
 
 sleep(60)
@@ -91,23 +103,20 @@ history_osx_ts <- create_timeseries(new_osx_df, history_osx_ts, "UserId", "EvtTi
 }
 #history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 
-#########################################################
-# Run forecasting algorithms
-#########################################################
+# Run forecasting algorithms to update for next time period
 
 #Creating Holt-Winters model and predicting for journaling project
-
 predict_hw(history_j_ts, label="Journaling")
 #Creating Holt-Winters model and predicting for osx instruments
-predict_hw(history_osx_ts, label="OSX Instruments")
+predict_hw(history_osx_ts, label="OSXInstrumenter")
 #Creating Garch model and predicting for journaling project
 #predict_garch(history_j_ts, "Journaling")
 #Creating Garch model and predicting for osx instruments
-#predict_garch(history_osx_ts, "OSX Instruments")
+#predict_garch(history_osx_ts, "OSXInstrumenter")
 #Creating Arima model and predicting for journaling project
 #predict_arima(history_j_ts, "Journaling")
 #Creating Arima model and predicting for osx instruments
-#predict_arima(history_osx_ts, "OSX Instruments")
+#predict_arima(history_osx_ts, "OSXInstrumenter")
 
 # End of loop
 }
