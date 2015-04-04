@@ -10,7 +10,7 @@ predict_hw <- function(timeseries) {
 fit_hw <- HoltWinters(timeseries, gamma=FALSE)
 
 # [PJ] Plot the Holt-Winters model
-plot(fit_hw)
+#plot(fit_hw)
 
 # [PJ] Plot forecasts from the model. TODO - explain more.
 plot(forecast(fit_hw))
