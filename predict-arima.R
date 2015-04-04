@@ -4,7 +4,7 @@
 # Denil Vira Last updated: 4/4/2015
 ############################################################
 
-predict_arima <- function(timeseries) {
+predict_arima <- function(timeseries , label="Unspecified") {
 
 # [DV] Run Arima prediction
 fit_arima <- auto.arima(timeseries)
@@ -13,7 +13,8 @@ fit_arima <- auto.arima(timeseries)
 plot(fit_arima)
 
 # [DV] Plot forecasts from the model. TODO - explain more.
-plot(forecast(fit_arima))
+
+t <- paste("ARIMA Forecasts for dataset",label,sep=" ")
+plot(forecast(fit_hw),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }
-
