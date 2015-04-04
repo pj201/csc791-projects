@@ -13,7 +13,7 @@ fit_arima <- auto.arima(timeseries)
 plot(fit_arima)
 
 # [DV] Plot forecasts from the model. TODO - explain more.
-plot(forecast(fit_arima,1))
+plot(forecast(fit_arima))
 
 }
 
