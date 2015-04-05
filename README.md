@@ -11,7 +11,9 @@
 
 To install:
 
-Execute the 'install.R' file inside R - this will install all dependencies
+* Execute the 'install.R' file inside R - this will install all dependencies. Please use R version 3.1.1 or later. twitteR package is not compatible with older versions.
+
+* Please enter twitter credentails on line 19 in ingest-twitter.R
 
 To run:
 
