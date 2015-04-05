@@ -24,7 +24,7 @@ ingest_twitter = function(username,count) {
   text=vector()
   id=vector()
   for (i in tweets) {
-    created=c(created,i$created*1000)
+    created=c(created,i$created)
     text=c(text,i$text)
     id=c(id,i$id)
   }

@@ -5,14 +5,12 @@
 ############################################################
 
 predict_garch <- function(timeseries, label="Unspecified") {
+  
+#Fit the garch Model
+gFit=garchFit(formula = ~ garch(1, 1),data=timeseries)
 
-# [PJ] Run Holt-Winters prediction (non-seasonal)
-fit_hw <- HoltWinters(timeseries, gamma=FALSE)
-
-# [PJ] Plot the Holt-Winters model
-#plot(fit_hw)
-
-# [PJ] Plot forecasts from the model. TODO - explain more.
-plot(forecast(fit_hw))
-
+#Plot graph
+t <- paste("Garch Model Forecasts for",label,sep=" ")
+plot(residuals(gFit,standardize=T),type="l",main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
+  
 }

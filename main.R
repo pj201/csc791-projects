@@ -13,6 +13,7 @@
 # Load libraries needed by this script
 library(forecast)
 library(stats)
+library(fGarch)
 
 # Set working directory to the directory of this source file
 this.dir <- dirname(parent.frame(2)$ofile)
@@ -159,7 +160,7 @@ t<-readline()
   if(!is.null(new_osx_df)) {
   history_osx_ts <- create_timeseries(new_osx_df, history_osx_ts, "UserId", "EvtTime", size)
   }
-  history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
+  history_twitter_ts <- create_timeseries(new_t_df, tsNull, "id", "EvtTime", 720)
 
   # Run forecasting algorithms to update for next time period
 
