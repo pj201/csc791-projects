@@ -1,6 +1,6 @@
 ############################################################
 # CSC791 P3: Function to ingest data from Journaling project
-# Paul Jones, pjones@ncsu.edu, Last updated: 3/25/2015
+# Paul Jones, pjones@ncsu.edu, Last updated: 4/4/2015
 ############################################################
 
 #library(Rcurl)
@@ -25,7 +25,7 @@ ingest_journaling <- function(fromTimestamp, toTimestamp) {
                accept_json(),
                verbose(),
                add_headers("Content-Type" = "application/json", 
-                           "AuthToken" = "79e0eb5ad4c0a4ceff6889dc6e8fd3ec188219db7a8a7e63d04a0730c2f9f0c9"),
+                           "AuthToken" = "9c0c9a9e0ec177d2bf9fd55edff5272cb2a3b9823babf07d6f762e3f9c9509bb"),
                body = toJSON(list(
                  "type" = "find",
                  "query" = list(
