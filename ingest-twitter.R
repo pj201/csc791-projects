@@ -1,12 +1,11 @@
 ############################################################
 # CSC791 P3: Function to ingest data from Twitter API
-# Preetham, preems@ncsu.edu, Last updated: 4/4/2015
+# Preetham, pmahish@ncsu.edu, Last updated: 4/4/2015
 ############################################################
 
 # install.packages(twitteR)
 
-# TO DO: problem - this doesn't work with R v3.0.2 (latest R-base for Ubuntu)
-# Depends on rjson package, which isn't available.
+# This requires R version of 3.1.1 or later
 
 library(twitteR)
 
@@ -25,10 +24,10 @@ ingest_twitter = function(username,count) {
   text=vector()
   id=vector()
   for (i in tweets) {
-    created=c(created,i$created)
+    created=c(created,i$created*1000)
     text=c(text,i$text)
     id=c(id,i$id)
   }
   
-  data.frame(id=id,text=text,created=created)
+  data.frame(id=id,text=text,EvtTime=created)
 }

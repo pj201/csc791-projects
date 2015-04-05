@@ -21,7 +21,7 @@ setwd(this.dir)
 # Load functions from other files
 source("ingest-journaling.R")
 source("ingest-osx.R")
-#source("ingest-twitter.R")
+source("ingest-twitter.R")
 source("preprocess.R")
 source("predict-ets.R")
 source("predict-arima.R")
@@ -65,7 +65,7 @@ cat("Press enter to fetch historical data from Twitter (@BarackObama)...")
 t<-readline()
 
 # Fetch Data from Twitter
-#new_t_df <- ingest_twitter("BarackObama",100) 
+new_t_df <- ingest_twitter("BarackObama",200) 
 
 # Initialise timeseries object
 tsOld <- ts(c(0));
@@ -82,7 +82,7 @@ t<-readline()
 
 history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
 history_osx_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
-#history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
+history_twitter_ts <- create_timeseries(new_t_df, tsNull, "id", "EvtTime", size)
 
 # Run forecasting algorithms on historic data
 
@@ -114,6 +114,20 @@ predict_arima(history_j_ts, label="Journaling")
 cat("Building Exponential Smoothing model...\n")
 predict_ets(history_j_ts, label="Journaling")
 
+cat("\nPress enter to build prediction models on @BarackObama's twitter activity data...")
+t<-readline()
+
+par(mfrow=c(2,2))
+
+cat("Building Holt-Winters model...\n")
+predict_hw(history_twitter_ts, label="@BarackObama's twitter")
+cat("Building GARCH model...\n")
+predict_garch(history_twitter_ts, label="@BarackObama's twitter")
+cat("Building ARIMA model...\n")
+predict_arima(history_twitter_ts, label="@BarackObama's twitter")
+cat("Building Exponential Smoothing model...\n")
+predict_ets(history_twitter_ts, label="@BarackObama's twitter")
+
 ############################################################
 # Ingest continuous streaming data and make forecasts
 ############################################################
@@ -135,7 +149,7 @@ t<-readline()
   cat("Getting new data from CSC791 Journaling Trial...")
   new_j_df <- ingest_journaling(previousTime, presentTime) 
   cat("Getting new data from Twitter (@BarackObama)...")
-  #new_t_df <- ingest_twitter("BarackObama",100)
+  new_t_df <- ingest_twitter("BarackObama",200)
 
   cat("\n\nUpdating time series...\n")
   # If we have new data, pre-process to create time series
@@ -145,7 +159,7 @@ t<-readline()
   if(!is.null(new_osx_df)) {
   history_osx_ts <- create_timeseries(new_osx_df, history_osx_ts, "UserId", "EvtTime", size)
   }
-  #history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
+  history_twitter_ts <- create_timeseries(new_osx_df, tsNull, "UserId", "EvtTime", size)
 
   # Run forecasting algorithms to update for next time period
 
@@ -172,6 +186,17 @@ t<-readline()
   predict_ets(history_j_ts, label="Journaling")
 
   # TO DO: Update models for Twitter!
+
+  cat("\nUpdating prediction models for @BarackObama'a twitter activity data...\n")
+  par(mfrow=c(2,2))
+  cat("Updating Holt-Winters model...\n")
+  predict_hw(history_twitter_ts, label="@BarackObama's twitter")
+  cat("Updating GARCH model...\n")
+  predict_garch(history_twitter_ts, label="@BarackObama's twitter")
+  cat("Updating ARIMA model...\n")
+  predict_arima(history_twitter_ts, label="@BarackObama's twitter")
+  cat("Updating Exponential Smoothing model...\n")
+  predict_ets(history_twitter_ts, label="@BarackObama's twitter")
   
   # Wait one minute betwen data requests 
   # (should be one hour in a real app)
