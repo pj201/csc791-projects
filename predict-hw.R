@@ -13,7 +13,7 @@ fit_hw <- HoltWinters(timeseries, gamma=FALSE)
 #plot(fit_hw)
 
 # [PJ] Plot forecasts from the model. TODO - explain more.
-t <- paste("HoltWinters Forecasts for dataset",label,sep=" ")
+t <- paste("HoltWinters Forecasts for",label,sep=" ")
 plot(forecast(fit_hw),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }

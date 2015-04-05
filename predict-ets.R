@@ -6,14 +6,14 @@
 
 predict_ets <- function(timeseries, label="Unspecified") {
 
-# [NT] Run ets prediction (non-seasonal)
-fit_ets <- ets(timeseries, gamma=FALSE)
+# [NT] Run ets prediction
+fit_ets <- ets(timeseries)
 
 # [NT] Plot the ets model
 #plot(fit_ets)
 
 # [NT] Plot forecasts from the model
-t <- paste("Exponential Smoothing Space Forecasts for dataset",label,sep=" ")
+t <- paste("Exponential Smoothing Forecast for",label,sep=" ")
 plot(forecast(fit_ets),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }

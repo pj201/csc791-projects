@@ -4,17 +4,16 @@
 # Denil Vira Last updated: 4/4/2015
 ############################################################
 
-predict_arima <- function(timeseries , label="Unspecified") {
+predict_arima <- function(timeseries, label="Unspecified") {
 
 # [DV] Run Arima prediction
 fit_arima <- auto.arima(timeseries)
 
 # [DV] Plot the Arima model
-plot(fit_arima)
+#plot(fit_arima)
 
 # [DV] Plot forecasts from the model. TODO - explain more.
-
-t <- paste("ARIMA Forecasts for dataset",label,sep=" ")
-plot(forecast(fit_hw),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
+t <- paste("ARIMA Forecasts for",label,sep=" ")
+plot(forecast(fit_arima),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }
