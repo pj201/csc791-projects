@@ -7,6 +7,8 @@
 predict_arima <- function(timeseries, label="Unspecified") {
 
 # [DV] Run Arima prediction
+# auto.arima returns best ARIMA model according to either AIC, AICc or BIC value. 
+# The function conducts a search over possible model within the order constraints provided.
 fit_arima <- auto.arima(timeseries)
 
 # [DV] Plot the Arima model
