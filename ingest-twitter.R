@@ -16,7 +16,7 @@ ingest_twitter = function(username,count) {
   # 2. Consumer secret
   # 3. Access Token
   # 4. Access Secret
-  setup_twitter_oauth("","",access_token="",access_secret="")
+  setup_twitter_oauth(Sys.getenv("TWITTER_ACCESS_TOKEN"),Sys.getenv("TWITTER_ACCESS_TOKEN_SECRET"),access_token=Sys.getenv("TWITTER_CONSUMER_KEY"),access_secret=Sys.getenv("TWITTER_CONSUMER_SECRET"))
   tweets=userTimeline(getUser(username),n=count)
   
   #Extract data and convert list of list to Data.frame
