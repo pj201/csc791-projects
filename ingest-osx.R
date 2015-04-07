@@ -24,7 +24,7 @@ ingest_osx <- function(fromTimestamp, toTimestamp) {
   resp <- POST("https://las-skylr-token.oscar.ncsu.edu/api/data/document/query",
               accept_json(),
               verbose(),
-              add_headers("Content-Type" = "application/json", "AuthToken" = "79e0eb5ad4c0a4ceff6889dc6e8fd3ec188219db7a8a7e63d04a0730c2f9f0c9"),
+              add_headers("Content-Type" = "application/json", "AuthToken" = "9c0c9a9e0ec177d2bf9fd55edff5272cb2a3b9823babf07d6f762e3f9c9509bb"),
               body = toJSON(list(
                 "type" = "find",
                 "query" = list(
