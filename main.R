@@ -48,7 +48,9 @@ presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000;
 # Present Time stamp object for one month back (to get all historic data)
 previousTime<- presentTime  - 2592000000; 
 
-cat("Welcome to a demo of time series analysis techniques in R!\n\n")
+cat("**************************************************************\n")
+cat("* Welcome to a demo of time series analysis techniques in R! *\n")
+cat("**************************************************************\n\n")
 
 cat("Press enter to fetch historical data from the LAS OSXInstrumenter...")
 t<-readline()
@@ -63,6 +65,7 @@ t<-readline()
 new_j_df <- ingest_journaling(previousTime, presentTime)
 
 cat("Press enter to fetch historical data from Twitter (@BarackObama)...")
+cat("\n[Make sure you've added your Twitter Oauth credentials to ingest-twitter.R]")
 t<-readline()
 
 # Fetch Data from Twitter
