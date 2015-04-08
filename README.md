@@ -29,10 +29,10 @@ data for pjones, and a month of Journaling data for pjones).
 
 The time series modelling techniques we've included are:
 
-* Holt-Winters: simple linear model to capture seasonality
-* ARIMA: auto-regressive integrated moving average model
+* ETS: simple weighted average, with exponentially decreasing weights over time
+* Holt-Winters: additive or multiplicative model to capture moving average, trend and seasonality
+* ARIMA: standard auto-regressive integrated moving average model
 * GARCH: generalized auto-regressive conditional heteroskedasticity
-* ETS: weighted average, with exponentially descreasing weights over time
 
 More detail on each technique is included in the predict-*.R source files
 
