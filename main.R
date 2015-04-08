@@ -101,6 +101,8 @@ predict_arima(history_osx_ts, label="OSXInstrumenter")
 cat("Building Exponential Smoothing model...\n")
 predict_ets(history_osx_ts, label="OSXInstrumenter")
 
+mtext("Time Series Forecasts for LAS OSXInstrumenter (pjones) Dataset",outer=TRUE,line=-1.5)
+
 cat("\nPress enter to build prediction models on CSC791 Journaling activity data...")
 t<-readline()
 
@@ -115,6 +117,8 @@ predict_arima(history_j_ts, label="Journaling")
 cat("Building Exponential Smoothing model...\n")
 predict_ets(history_j_ts, label="Journaling")
 
+mtext("Time Series Forecasts for LAS Journaling Dataset",outer=TRUE,line=-1.5)
+
 cat("\nPress enter to build prediction models on @BarackObama's twitter activity data...")
 t<-readline()
 
@@ -128,6 +132,8 @@ cat("Building ARIMA model...\n")
 predict_arima(history_twitter_ts, label="@BarackObama's twitter")
 cat("Building Exponential Smoothing model...\n")
 predict_ets(history_twitter_ts, label="@BarackObama's twitter")
+
+mtext("Time Series Forecasts for Twitter (@BarackObama) Dataset",outer=TRUE,line=-1.5)
 
 ############################################################
 # Ingest continuous streaming data and make forecasts
@@ -175,6 +181,8 @@ t<-readline()
   cat("Updating Exponential Smoothing model...\n")
   predict_ets(history_osx_ts, label="OSXInstrumenter")
   
+  mtext("Time Series Forecasts for LAS OSXInstrumenter (pjones) Dataset",outer=TRUE,line=-1.5)
+
   cat("\nUpdating prediction models for CSC791 Journaling activity data...\n")
   par(mfrow=c(2,2))
   cat("Updating Holt-Winters model...\n")
@@ -185,6 +193,8 @@ t<-readline()
   predict_arima(history_j_ts, label="Journaling")
   cat("Updating Exponential Smoothing model...\n")
   predict_ets(history_j_ts, label="Journaling")
+
+  mtext("Time Series Forecasts for CSC791 Journaling Activity Dataset",outer=TRUE,line=-1.5)
 
   # TO DO: Update models for Twitter!
 
@@ -199,6 +209,8 @@ t<-readline()
   cat("Updating Exponential Smoothing model...\n")
   predict_ets(history_twitter_ts, label="@BarackObama's twitter")
   
+  mtext("Time Series Forecasts for Twitter (@BarackObama) Dataset",outer=TRUE,line=-1.5)
+
   # Wait one minute betwen data requests 
   # (should be one hour in a real app)
   #sleep(60)

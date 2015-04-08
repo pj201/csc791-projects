@@ -27,9 +27,8 @@ predict_hw <- function(timeseries, label="Unspecified") {
   #      We have a month of data, so expect about 20 periods.
   
   fit_hw <- HoltWinters(timeseries, 
-                        alpha=NULL, beta=NULL, gamma=NULL,
-                        start.periods = 20, 
-                        optim.start = c(alpha=0.3, beta=0.1, gamma=0.1))
+                        alpha=NULL, beta=NULL, gamma=FALSE, 
+                        optim.start = c(alpha=0.3, beta=0.1, gamma=0.1)) #start.periods = 2,
 
   # [PJ] Plot the Holt-Winters model (useful for debugging)
   #plot(fit_hw)
@@ -41,12 +40,12 @@ predict_hw <- function(timeseries, label="Unspecified") {
   # intervals to 80-95% as suggested by the documentation, and we try to make it as robust to missing
   # data as possible - this can certainly happen with OSXInstrumenter and Journaling data.
   
-  forecast_hw <- forecast(fit_hw, level=c(80,95), robust=TRUE, find.frequency=TRUE)
+  forecast_hw <- forecast(fit_hw, level=c(80,95), robust=TRUE) #, find.frequency=TRUE)
   
   # [PJ] Create a title, and plot the forecasts
   
-  t <- paste("HoltWinters Forecasts for",label,sep=" ")
-  plot(forecast(forecast_hw),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
+  #t <- paste("HoltWinters Forecasts for",label,sep=" ")
+  plot(forecast(forecast_hw),main="HoltWinters",xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }
 

@@ -15,7 +15,7 @@ fit_arima <- auto.arima(timeseries)
 #plot(fit_arima)
 
 # [DV] Plot forecasts from the model. TODO - explain more.
-t <- paste("ARIMA Forecasts for",label,sep=" ")
-plot(forecast(fit_arima),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
+#t <- paste("ARIMA Forecasts for",label,sep=" ")
+plot(forecast(fit_arima),main="ARIMA",xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }

@@ -13,8 +13,8 @@ fit_ets <- ets(timeseries)
 #plot(fit_ets)
 
 # [NT] Plot forecasts from the model
-t <- paste("Exponential Smoothing Forecast for",label,sep=" ")
-plot(forecast(fit_ets),main=t,xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
+#t <- paste("Exponential Smoothing Forecast for",label,sep=" ")
+plot(forecast(fit_ets),main="Exponential Smoothing",xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
 
 }
 

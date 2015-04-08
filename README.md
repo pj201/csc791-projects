@@ -6,18 +6,18 @@
 # - Kshitij Sharma, ksharma3@ncsu.edu 
 # - Denil Vira, dvvira@ncsu.edu
 # - Nitin Tak, ntak@ncsu.edu
-# Last Updated: 4/4/15
+# Last Updated: 4/8/15
 #############################################
 
 To install:
 
-* Execute the 'install.R' file inside R - this will install all dependencies. Please use R version 3.1.1 or later. twitteR package is not compatible with older versions.
-
-* Please enter twitter credentails on line 19 in ingest-twitter.R
+* Execute the 'install.R' file inside R - this will install all dependencies. 
+* Please use R version 3.1.1 or later. twitteR package is not compatible with older versions.
+* Please enter your twitter credentials on line 19 in ingest-twitter.R
 
 To run:
 
-Execute the 'main.R' file inside R - this will run the complete demo.
+* Execute the 'main.R' file inside R - this will run the complete demo.
 
 ----------------------------------------------
 
@@ -34,6 +34,8 @@ The time series modelling techniques we've included are:
 * GARCH: generalized auto-regressive conditional heteroskedasticity
 * ETS: weighted average, with exponentially descreasing weights over time
 
+More detail on each technique is included in the predict-*.R source files
+
 -----------------------------------------------
 
 Source files:
@@ -42,4 +44,8 @@ Source files:
 - preprocess.R: functions for creating time series objects
 - predict-*.R: functions to build models and create predictions
 - main.R: overall demo file
+
+Example output:
+
+- plots/Forecasts-*.png contains example output from the demo.
 
