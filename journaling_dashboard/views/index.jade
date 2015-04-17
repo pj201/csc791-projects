@@ -1,0 +1,41 @@
+extends layout
+
+// Define basic data fields using Jade’s mixin features
+// Bind to those data fields for dynamic updates
+
+mixin metric(id,title,footer)
+  div(class="panel panel-default",id="#{id}-metric")
+    if title
+           //div.panel-heading: h1.panel-title= title
+           div(class="panel-heading metric")
+             h3(align = "center")= title
+    div(class="panel-body metric")
+           ul(id="#{id}")= " "
+    if footer
+          div.panel-footer= footer
+
+block styles
+    // link(rel='stylesheet',href='/stylesheets/dashboard.css')
+
+block scripts
+   // bind to the data fields defined in mixin
+   //script(src='/javascripts/dashboard.js')
+   // stream the actual data from the data stream emitter
+   //script(src='/javascripts/streamEmitter.js')
+   script(src='/socket.io/socket.io.js')
+   script(src='/javascripts/client.socket.io.js')
+
+block content
+  div(class="container")
+    div.page-header: h1(align = "center", style="color: #FFFFFF; font-weight: bold") Twitter Sentiment Analysis
+    //IMG(SRC="/home/dv/capstone/journaling_dashboard/public/images/Forecasts-Twitter.png", WIDTH=900, HEIGHT=900)    
+    IMG(SRC="/images/Forecasts-Twitter.png", WIDTH=500, HEIGHT=500)
+    div(class="center", align = "center")
+      div(class="col=lg-3")
+        +metric("ss-stats","Tweet Stats"," ")
+    div(class="left")
+      div(class="col-sm-6")
+        +metric("ss-love","Love Tweets"," ")
+    div(class="right")
+      div(class="col-sm-6")
+        +metric("ss-hate","Hate Tweets"," ")

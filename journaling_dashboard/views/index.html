@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <!-- link(rel='stylesheet',href='/stylesheets/dashboard.css')-->
+  </head>
+  <body style="background-color:#55ACEE">
+    <div class="container">
+      <div class="page-header">
+        <h1 align="center" style="color: #FFFFFF; font-weight: bold">Twitter Sentiment Analysis</h1>
+      </div>
+      <IMG SRC="~/public/images/Forecast-Twitter.png" WIDTH="32" HEIGHT="32"></IMG>
+      <div align="center" class="center">
+        <div class="col=lg-3">
+          <div id="ss-stats-metric" class="panel panel-default">
+            <!--div.panel-heading: h1.panel-title= title-->
+            <div class="panel-heading metric">
+              <h3 align="center">Tweet Stats</h3>
+            </div>
+            <div class="panel-body metric">
+              <ul id="ss-stats"> </ul>
+            </div>
+            <div class="panel-footer"> </div>
+          </div>
+        </div>
+      </div>
+      <div class="left">
+        <div class="col-sm-6">
+          <div id="ss-love-metric" class="panel panel-default">
+            <!--div.panel-heading: h1.panel-title= title-->
+            <div class="panel-heading metric">
+              <h3 align="center">Love Tweets</h3>
+            </div>
+            <div class="panel-body metric">
+              <ul id="ss-love"> </ul>
+            </div>
+            <div class="panel-footer"> </div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="col-sm-6">
+          <div id="ss-hate-metric" class="panel panel-default">
+            <!--div.panel-heading: h1.panel-title= title-->
+            <div class="panel-heading metric">
+              <h3 align="center">Hate Tweets</h3>
+            </div>
+            <div class="panel-body metric">
+              <ul id="ss-hate"> </ul>
+            </div>
+            <div class="panel-footer"> </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+  </body>
+  <p id="ss-pingpong"></p>
+  <!-- bind to the data fields defined in mixin-->
+  <!--script(src='/javascripts/dashboard.js')-->
+  <!-- stream the actual data from the data stream emitter-->
+  <!--script(src='/javascripts/streamEmitter.js')-->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/javascripts/client.socket.io.js"></script>
+</html>
