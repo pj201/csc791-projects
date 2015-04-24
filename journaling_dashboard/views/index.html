@@ -8,62 +8,108 @@
     <!-- link(rel='stylesheet',href='/stylesheets/dashboard.css')-->
   </head>
   <body style="background-color:#55ACEE">
+    <h1 align="center" style="color: #FFFFFF; font-weight: bold">Journaling Dashboard</h1>
+    <!--
     <div class="container">
-      <div class="page-header">
-        <h1 align="center" style="color: #FFFFFF; font-weight: bold">Twitter Sentiment Analysis</h1>
-      </div>
-      <IMG SRC="~/public/images/Forecast-Twitter.png" WIDTH="32" HEIGHT="32"></IMG>
-      <div align="center" class="center">
-        <div class="col=lg-3">
-          <div id="ss-stats-metric" class="panel panel-default">
-            <!--div.panel-heading: h1.panel-title= title-->
-            <div class="panel-heading metric">
-              <h3 align="center">Tweet Stats</h3>
-            </div>
-            <div class="panel-body metric">
-              <ul id="ss-stats"> </ul>
-            </div>
-            <div class="panel-footer"> </div>
-          </div>
-        </div>
-      </div>
-      <div class="left">
-        <div class="col-sm-6">
-          <div id="ss-love-metric" class="panel panel-default">
-            <!--div.panel-heading: h1.panel-title= title-->
-            <div class="panel-heading metric">
-              <h3 align="center">Love Tweets</h3>
-            </div>
-            <div class="panel-body metric">
-              <ul id="ss-love"> </ul>
-            </div>
-            <div class="panel-footer"> </div>
-          </div>
-        </div>
-      </div>
-      <div class="right">
-        <div class="col-sm-6">
-          <div id="ss-hate-metric" class="panel panel-default">
-            <!--div.panel-heading: h1.panel-title= title-->
-            <div class="panel-heading metric">
-              <h3 align="center">Hate Tweets</h3>
-            </div>
-            <div class="panel-body metric">
-              <ul id="ss-hate"> </ul>
-            </div>
-            <div class="panel-footer"> </div>
-          </div>
-        </div>
-      </div>
+    <div class="page-header">
     </div>
+    -->
+    <!-- <IMG SRC="/public/images/Forecast-Twitter.png" WIDTH="32" HEIGHT="32"></IMG>-->
+    <!-- <div align="center" class="center">-->
+    <table style="width:80%" border="1" align="center">
+      <tr>
+        <button onclick="ClickFun()">Click me!</button>
+        <td id="nitin" style="width:30%">Aggregate</td>
+        <td style="width:35%">Users:
+          <!-- <select id="selectionUser" onchange="alert(this.options[this.selectedIndex].text);">-->
+          <select id="selectionUser" onchange="UserChanged()">
+            <option value="" style="display:none">Choose a student</option>
+            <option value="u1">User 1</option>
+            <option value="u2">User 2</option>
+            <option value="u3">User 3</option>
+            <option value="u4">User 4</option>
+            <option value="u5">User 5</option>
+          </select>
+        </td>
+        <td style="width:35%">Assignments:
+          <select id="selectionAssignment">
+            <option value="" disabled="" selected="">Select an Assignment</option>
+            <option value="a1">Assignment 1</option>
+            <option value="a2">Assignment 2</option>
+            <option value="a3">Assignment 3</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><img id="img" src="/images/Forecast-Twitter.png" width="300" height="300"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <!--
+    <div class="col=lg-3">
+    <div id="ss-stats-metric" class="panel panel-default">
+    <div class="panel-heading metric">
+    <h3 align="center">Tweet Stats</h3>
+    </div>
+    <div class="panel-body metric">
+    <ul id="ss-stats"> </ul>
+    </div>
+    <div class="panel-footer"> </div>
+    </div>
+    </div>
+    </div>
+    <div class="left">
+    <div class="col-sm-6">
+    <div id="ss-love-metric" class="panel panel-default">
+    <div class="panel-heading metric">
+    <h3 align="center">Love Tweets</h3>
+    </div>
+    <div class="panel-body metric">
+    <ul id="ss-love"> </ul>
+    </div>
+    <div class="panel-footer"> </div>
+    </div>
+    </div>
+    </div>
+    <div class="right">
+    <div class="col-sm-6">
+    <div id="ss-hate-metric" class="panel panel-default">
+    <div class="panel-heading metric">
+    <h3 align="center">Hate Tweets</h3>
+    </div>
+    <div class="panel-body metric">
+    <ul id="ss-hate"> </ul>
+    </div>
+    <div class="panel-footer"> </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    -->
     <script src="/javascripts/jquery.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
+    <script>
+      //document.getElementById("selectionUser").addEventListener("onchange", UserChanged);
+      document.getElementById("selectionAssignment").addEventListener("onchange", AssignmentChanged);
+      document.getElementById("nitin").innerHTML = document.getElementById("selectionUser").value ;
+    </script>
   </body>
   <p id="ss-pingpong"></p>
   <!-- bind to the data fields defined in mixin-->
-  <!--script(src='/javascripts/dashboard.js')-->
+  <!-- script(src='/javascripts/dashboard.js')-->
   <!-- stream the actual data from the data stream emitter-->
-  <!--script(src='/javascripts/streamEmitter.js')-->
+  <!-- script(src='/javascripts/streamEmitter.js')-->
   <script src="/socket.io/socket.io.js"></script>
   <script src="/javascripts/client.socket.io.js"></script>
 </html>

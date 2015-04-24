@@ -1,41 +1,103 @@
-extends layout
-
-// Define basic data fields using Jade’s mixin features
-// Bind to those data fields for dynamic updates
-
-mixin metric(id,title,footer)
-  div(class="panel panel-default",id="#{id}-metric")
-    if title
-           //div.panel-heading: h1.panel-title= title
-           div(class="panel-heading metric")
-             h3(align = "center")= title
-    div(class="panel-body metric")
-           ul(id="#{id}")= " "
-    if footer
-          div.panel-footer= footer
-
-block styles
+doctype html
+html
+  head
+    title Dashboard Test
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
     // link(rel='stylesheet',href='/stylesheets/dashboard.css')
-
-block scripts
-   // bind to the data fields defined in mixin
-   //script(src='/javascripts/dashboard.js')
-   // stream the actual data from the data stream emitter
-   //script(src='/javascripts/streamEmitter.js')
-   script(src='/socket.io/socket.io.js')
-   script(src='/javascripts/client.socket.io.js')
-
-block content
-  div(class="container")
-    div.page-header: h1(align = "center", style="color: #FFFFFF; font-weight: bold") Twitter Sentiment Analysis
-    //IMG(SRC="/home/dv/capstone/journaling_dashboard/public/images/Forecasts-Twitter.png", WIDTH=900, HEIGHT=900)    
-    IMG(SRC="/images/Forecasts-Twitter.png", WIDTH=500, HEIGHT=500)
-    div(class="center", align = "center")
-      div(class="col=lg-3")
-        +metric("ss-stats","Tweet Stats"," ")
-    div(class="left")
-      div(class="col-sm-6")
-        +metric("ss-love","Love Tweets"," ")
-    div(class="right")
-      div(class="col-sm-6")
-        +metric("ss-hate","Hate Tweets"," ")
+  body(style='background-color:#55ACEE')
+    h1(align='center', style='color: #FFFFFF; font-weight: bold') Journaling Dashboard
+    //
+      <div class="container">
+      <div class="page-header">
+      </div>
+    // <IMG SRC="/public/images/Forecast-Twitter.png" WIDTH="32" HEIGHT="32"></IMG>
+    // <div align="center" class="center">
+    table(style='width:80%', border='1', align='center')
+      tr
+        button(onclick='ClickFun()') Click me!
+        td#nitin(style='width:30%') Aggregate
+        td(style='width:35%')
+          | Users:
+          // <select id="selectionUser" onchange="alert(this.options[this.selectedIndex].text);">
+          select#selectionUser(onchange='UserChanged()')
+            option(value='', style='display:none') Choose a student
+            option(value='u1') User 1
+            option(value='u2') User 2
+            option(value='u3') User 3
+            option(value='u4') User 4
+            option(value='u5') User 5
+        td(style='width:35%')
+          | Assignments:
+          select#selectionAssignment
+            option(value='', disabled='', selected='') Select an Assignment
+            option(value='a1') Assignment 1
+            option(value='a2') Assignment 2
+            option(value='a3') Assignment 3
+      tr
+        td
+          img#img(src='/images/Forecast-Twitter.png', width='300', height='300')
+        td
+        td
+      tr
+        td
+        td
+        td
+      tr
+        td
+        td
+        td
+    //
+      <div class="col=lg-3">
+      <div id="ss-stats-metric" class="panel panel-default">
+      <div class="panel-heading metric">
+      <h3 align="center">Tweet Stats</h3>
+      </div>
+      <div class="panel-body metric">
+      <ul id="ss-stats"> </ul>
+      </div>
+      <div class="panel-footer"> </div>
+      </div>
+      </div>
+      </div>
+      <div class="left">
+      <div class="col-sm-6">
+      <div id="ss-love-metric" class="panel panel-default">
+      <div class="panel-heading metric">
+      <h3 align="center">Love Tweets</h3>
+      </div>
+      <div class="panel-body metric">
+      <ul id="ss-love"> </ul>
+      </div>
+      <div class="panel-footer"> </div>
+      </div>
+      </div>
+      </div>
+      <div class="right">
+      <div class="col-sm-6">
+      <div id="ss-hate-metric" class="panel panel-default">
+      <div class="panel-heading metric">
+      <h3 align="center">Hate Tweets</h3>
+      </div>
+      <div class="panel-body metric">
+      <ul id="ss-hate"> </ul>
+      </div>
+      <div class="panel-footer"> </div>
+      </div>
+      </div>
+      </div>
+      </div>
+    script(src='/javascripts/jquery.min.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script.
+      //document.getElementById("selectionUser").addEventListener("onchange", UserChanged);
+      document.getElementById("selectionAssignment").addEventListener("onchange", AssignmentChanged);
+      document.getElementById("nitin").innerHTML = document.getElementById("selectionUser").value ;
+  p#ss-pingpong
+  // bind to the data fields defined in mixin
+  // script(src='/javascripts/dashboard.js')
+  // stream the actual data from the data stream emitter
+  // script(src='/javascripts/streamEmitter.js')
+  script(src='/socket.io/socket.io.js')
+  script(src='/javascripts/client.socket.io.js')

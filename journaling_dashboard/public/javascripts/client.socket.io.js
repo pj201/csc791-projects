@@ -47,4 +47,13 @@ $(function() {
     });
 });
 
-
+function UserChanged(){
+	document.getElementById("nitin").innerHTML = document.getElementById("selectionUser").value;
+}
+function AssignmentChanged(){
+	document.getElementById("nitin").innerHTML = "Assignment change event capture";
+}
+function ClickFun(){
+	alert("into the click function..");
+	document.getElementById("img").src = "public/images/Forecasts-Twitter.png"
+}
