@@ -26,6 +26,15 @@ var mytweets = new Twit({
     access_token_secret: twitterAccessSecret
 });
 
+mytweets.verifyCredentials(function(err,data){
+    if(err){
+        console.log('Error in authenticating twitter access keys:..');
+        console.dir(err);
+        process.exit(1);    //for graceful failure
+    }
+});
+
+
 //start a server
 var server = require( 'http' ).createServer(app);
 var port = 3000;
@@ -59,7 +68,7 @@ sio.sockets.on('connection', function(socket){
 		 hateTweets++;
 		 tweetType = 'hate';
 	     }
-	     console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
+	     // console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
 	     //emit in JSON format to client
 	     socket.volatile.emit('ss-tweet', {
   	           name: data.user.screen_name,
