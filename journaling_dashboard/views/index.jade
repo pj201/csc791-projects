@@ -5,20 +5,15 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
-    // link(rel='stylesheet',href='/stylesheets/dashboard.css')
   body(style='background-color:#55ACEE')
     h1(align='center', style='color: #FFFFFF; font-weight: bold') Journaling Dashboard
-    //
-      <div class="container">
-      <div class="page-header">
-      </div>
-    // <IMG SRC="/public/images/Forecast-Twitter.png" WIDTH="32" HEIGHT="32"></IMG>
-    // <div align="center" class="center">
-    table(style='width:80%', border='1', align='center')
-      tr
+    table(style='width:90%', border-width='2', border='1', align='center')
+      tr(height='50px', align='center')
         button(onclick='ClickFun()') Click me!
-        td#nitin(style='width:30%') Aggregate
-        td(style='width:35%')
+        td(style='width:33%')
+          | Aggregate : 
+          #nitin  
+        td(style='width:34%')
           | Users:
           // <select id="selectionUser" onchange="alert(this.options[this.selectedIndex].text);">
           select#selectionUser(onchange='UserChanged()')
@@ -28,76 +23,75 @@ html
             option(value='u3') User 3
             option(value='u4') User 4
             option(value='u5') User 5
-        td(style='width:35%')
+        td(style='width:33%')
           | Assignments:
-          select#selectionAssignment
+          select#selectionAssignment(onchange='AssignmentChanged()')
             option(value='', disabled='', selected='') Select an Assignment
             option(value='a1') Assignment 1
             option(value='a2') Assignment 2
             option(value='a3') Assignment 3
       tr
+        td(width='inherit')
+          img#img_agg(src='spinner.gif', width='300', height='300')
         td
-          img#img(src='/images/Forecast-Twitter.png', width='300', height='300')
+          img#img_user(src='/public/images/spinner.gif', width='300', height='300')
+          // <div id="img_user" SRC="spinner.gif" WIDTH="300" HEIGHT="300"></div>
         td
-        td
+          img#img_assignment(src='/public/images/spinner.gif', width='300', height='300')
       tr
-        td
-        td
-        td
-      tr
-        td
-        td
+        td(colspan='3')
+          #csv_student
+            | This is Student CSV source...
+            br
+            // <embed src = "student.csv">
+          #csv_data
         td
     //
-      <div class="col=lg-3">
-      <div id="ss-stats-metric" class="panel panel-default">
-      <div class="panel-heading metric">
-      <h3 align="center">Tweet Stats</h3>
-      </div>
-      <div class="panel-body metric">
-      <ul id="ss-stats"> </ul>
-      </div>
-      <div class="panel-footer"> </div>
-      </div>
-      </div>
-      </div>
-      <div class="left">
-      <div class="col-sm-6">
-      <div id="ss-love-metric" class="panel panel-default">
-      <div class="panel-heading metric">
-      <h3 align="center">Love Tweets</h3>
-      </div>
-      <div class="panel-body metric">
-      <ul id="ss-love"> </ul>
-      </div>
-      <div class="panel-footer"> </div>
-      </div>
-      </div>
-      </div>
-      <div class="right">
-      <div class="col-sm-6">
-      <div id="ss-hate-metric" class="panel panel-default">
-      <div class="panel-heading metric">
-      <h3 align="center">Hate Tweets</h3>
-      </div>
-      <div class="panel-body metric">
-      <ul id="ss-hate"> </ul>
-      </div>
-      <div class="panel-footer"> </div>
-      </div>
-      </div>
-      </div>
-      </div>
-    script(src='/javascripts/jquery.min.js')
-    script(src='/javascripts/bootstrap.min.js')
+      <script src="/javascripts/jquery.min.js"></script>
+      <script src="/javascripts/bootstrap.min.js"></script>
     script.
       //document.getElementById("selectionUser").addEventListener("onchange", UserChanged);
-      document.getElementById("selectionAssignment").addEventListener("onchange", AssignmentChanged);
-      document.getElementById("nitin").innerHTML = document.getElementById("selectionUser").value ;
+      <!-- document.getElementById("selectionAssignment").addEventListener("onchange", AssignmentChanged); -->
+      <!--    document.getElementById("nitin").innerHTML = document.getElementById("selectionUser").value ;
+      -->
+      function UserChanged(){
+      //for updating the image files..
+      var dirName = document.getElementById("selectionUser").value;
+      document.getElementById("nitin").innerHTML = dirName;
+      var chartPath = "users/" + dirName + "/1.png";
+      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
+      document.getElementById("img_user").src = chartPath;
+      <!--      document.getElementById("img_user").background-image = chartPath;
+      -->
+      //for updating the csv files..
+      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
+      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
+      }
+      function AssignmentChanged(){
+      var dirName = document.getElementById("selectionAssignment").value;
+      document.getElementById("nitin").innerHTML = dirName;
+      var chartPath = "assignments/" + dirName + "/1.png";
+      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
+      document.getElementById("img_assignment").src = chartPath;
+      //for updating the csv files..
+      <!-- document.getElementById("csv_student").csvToTable("data.csv"); -->
+      }
+      function ClickFun(){
+      document.getElementById("csv_student").innerHTML = "This is spaceholder for CSV file..";
+      csvFunction();
+      }
+    script.
+      function csvFunction () {
+      alert("into jquery function for csv,,,");
+      $('#csv_student').CSVToTable('student.csv');
+      }
   p#ss-pingpong
-  // bind to the data fields defined in mixin
-  // script(src='/javascripts/dashboard.js')
-  // stream the actual data from the data stream emitter
-  // script(src='/javascripts/streamEmitter.js')
   script(src='/socket.io/socket.io.js')
   script(src='/javascripts/client.socket.io.js')
+  script(src='/javascripts/jquery.min.js')
+  script(src='/javascripts/bootstrap.min.js')
+  //
+    <script src="jquery.csvToTable.js"></script>
+    <script src="jquery-1.11.2.min.js"></script>
+  script(src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+  script(src='//jquerycsvtotable.googlecode.com/files/jquery.csvToTable.js')
