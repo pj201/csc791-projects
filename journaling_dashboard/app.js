@@ -12,6 +12,105 @@ var app = express();
 
 //Connect to twitter and open stream
 var Twit = require('ntwitter');
+var request = require('request');
+
+//https://contourline.wordpress.com/2013/10/08/700/
+
+//for calling R script from node.js server..
+var http = require('http');
+var spawn = require('child_process').spawn;
+var env = process.env;
+
+var opts = {cwd: process.cwd() + '/public/rscripts', 
+            env: process.env
+            };
+console.log("Awesome Nitin's opts: " + opts.cwd + ', ' + opts.env);
+
+opts.env['YEAR']=1987; 
+opts.env['NAME']='@NitinTak';
+var RCall = ['--no-restore', '--no-save', opts.cwd + '/hello.R'];
+console.log("this is the call to RCAll : ..." + RCall);
+var R = spawn('Rscript', RCall, opts);
+R.stdout.on('data', function(data){
+  var str  = data.toString();
+  console.log("NT_inside the stdout.on function.." + str);
+});
+R.on('close', function(code){
+  console.log("process exit code: " + code);
+})
+
+//http://leapon.tumblr.com/post/10168944986/run-r-script-and-display-graph-using-node-js
+
+var express = require('express');
+var exec = require('child_process').exec;
+var server = express(); //.createServer();
+// server.configure(function(){    
+//     server.use(express.static(__dirname + '/public/rscripts'));
+// });
+server.get('/', function(req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('R graph<br>');
+    process.env.R_WEB_DIR = process.cwd() + '/public/rscripts';
+    var child = exec('Rscript ./public/rscripts/graph.R', function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+        res.write('<img src='+process.cwd() +"/public/rscripts/xyplot.png" + '/>');
+        // res.write('<img src="/xyplot.png"/>');
+        res.end('<br>end of R script');
+    });
+});
+server.listen(1337, "127.0.0.1");
+console.log('Server running at http://127.0.0.1:1337/');
+
+
+
+/*
+function setup_R_job(opts,done){
+ 
+    var R  = spawn('Rscript', RCall, opts)
+    R.on('exit',function(code){
+        console.log('got exit code: '+code)
+        if(code==1){
+            // do something special
+            done()
+        }else{
+            done()
+        }
+        return null
+    })
+    return null
+}
+*/
+
+
+
+// server.configure(function(){    
+//     server.use(express.static(__dirname + '/public'));
+// });
+/*
+server.get('/', function(req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('R execution..<br>');
+    process.env.R_WEB_DIR = process.cwd() + '/public/rscripts';
+    console.log("Awesome Nitin's working directory: "+process.cwd());
+    var child = exec('Rscript script/hello.R', function(error, stdout, stderr) {
+        console.log('stdout:' + stdout);
+        console.log('stderr:' + stderr);
+        if (error !== null) {
+            console.log('exec error:' + error);
+        }
+        // res.write('<img src=”/xyplot.png"/>’);
+        res.end('<br>end of R script');
+    });
+});
+// server.listen(1337, “127.0.0.1”);
+// console.log('Server running at http://127.0.0.1:1337/’);
+*/
+
+
 
 //Initialize variables to connect to twitter
 var twitterConsumerKey = process.env.TWITTER_CONSUMER_KEY;
@@ -26,11 +125,50 @@ var mytweets = new Twit({
     access_token_secret: twitterAccessSecret
 });
 
+mytweets.verifyCredentials(function(err,data){
+    if(err){
+        console.log('Error in authenticating twitter access keys:..');
+        console.dir(err);
+        process.exit(1);    //for graceful failure
+    }
+});
+
+
+
+
 //start a server
 var server = require( 'http' ).createServer(app);
 var port = 3000;
 server.listen(port);
 console.log("Socket.io server listening at http://127.0.0.1: "+port);
+
+
+request({
+    url: 'https://las-skylr-token.oscar.ncsu.edu/api/data/document/query', //URL to hit
+    method: 'POST',
+    body: {
+'type':'find',
+  'query':{'data.UserId':'pjones',
+            'data.ProjId':"journaling-chrome",
+              'data.EvtTime':{"$gte":1423717200000,
+                              "$lte":1424303540000}}
+    },
+    headers:
+    {
+    'Content-Type': 'application/json', 
+    'AuthToken':'9c0c9a9e0ec177d2bf9fd55edff5272cb2a3b9823babf07d6f762e3f9c9509bb'
+    },
+    json : true
+}, function(error, response, body){
+  console.log("nitinnnnnnnnnn is awesome...");
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(response.statusCode, body);
+}
+});
+
+
 
 //variable to maintain twitter stats
 var totalTweets = 0;
@@ -59,7 +197,7 @@ sio.sockets.on('connection', function(socket){
 		 hateTweets++;
 		 tweetType = 'hate';
 	     }
-	     console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
+	     // console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
 	     //emit in JSON format to client
 	     socket.volatile.emit('ss-tweet', {
   	           name: data.user.screen_name,
