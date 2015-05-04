@@ -24,6 +24,73 @@ function ClickFun(){
       server.emit('request', {username: _username, assignment: _assignment});
 }
 
+function UserChanged(){
+      //for updating the image files..
+      var dirName = document.getElementById("selectionUser").value;
+      document.getElementById("nitin").innerHTML = dirName;
+      var chartPath = "/public/images/users/" + dirName + "/1.png";
+      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
+      document.getElementById("img_user").src = chartPath;
+      <!--      document.getElementById("img_user").background-image = chartPath;
+      -->
+      //for updating the csv files..
+      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
+      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
+}
+
+function AssignmentChanged(){
+      var dirName = document.getElementById("selectionAssignment").value;
+      document.getElementById("nitin").innerHTML = dirName;
+      var chartPath = "assignments/" + dirName + "/1.png";
+      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
+      document.getElementById("img_assignment").src = chartPath;
+      //for updating the csv files..
+      <!-- document.getElementById("csv_student").csvToTable("data.csv"); -->
+}
+
+function csvFunction () {
+	alert("into jquery function for csv,,,");
+	$('#csv_student').CSVToTable('student.csv');
+}
+
+
+
+/*
+function UserChanged(){
+      //for updating the image files..
+      var dirName = document.getElementById("selectionUser").value;
+      document.getElementById("nitin").innerHTML = dirName;
+      var chartPath = "users/" + dirName + "/1.png";
+      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
+      document.getElementById("img_user").src = chartPath;
+      <!--      document.getElementById("img_user").background-image = chartPath;
+      -->
+      //for updating the csv files..
+      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
+      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
+      }
+      function AssignmentChanged(){
+      var dirName = document.getElementById("selectionAssignment").value;
+      document.getElementById("nitin").innerHTML = dirName;
+      var chartPath = "assignments/" + dirName + "/1.png";
+      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
+      document.getElementById("img_assignment").src = chartPath;
+      //for updating the csv files..
+      <!-- document.getElementById("csv_student").csvToTable("data.csv"); -->
+      }
+      function ClickFun(){
+      document.getElementById("csv_student").innerHTML = "This is spaceholder for CSV file..";
+      csvFunction();
+      }
+    </script>
+    <script>
+      function csvFunction () {
+      alert("into jquery function for csv,,,");
+      $('#csv_student').CSVToTable('student.csv');
+      }
+*/
+
+
 /*for twitter..
 $(function() {
     var hateList = $('#ss-hate');  //Displays hateTweets
@@ -68,68 +135,4 @@ $(function() {
 			  + "Total Tweets = " + data.actualTweets; 
     });
 });
-*/
-function UserChanged(){
-      //for updating the image files..
-      var dirName = document.getElementById("selectionUser").value;
-      document.getElementById("nitin").innerHTML = dirName;
-      var chartPath = "/public/images/users/" + dirName + "/1.png";
-      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
-      document.getElementById("img_user").src = chartPath;
-      <!--      document.getElementById("img_user").background-image = chartPath;
-      -->
-      //for updating the csv files..
-      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
-      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
-}
-
-function AssignmentChanged(){
-      var dirName = document.getElementById("selectionAssignment").value;
-      document.getElementById("nitin").innerHTML = dirName;
-      var chartPath = "assignments/" + dirName + "/1.png";
-      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
-      document.getElementById("img_assignment").src = chartPath;
-      //for updating the csv files..
-      <!-- document.getElementById("csv_student").csvToTable("data.csv"); -->
-}
-function csvFunction () {
-	alert("into jquery function for csv,,,");
-	$('#csv_student').CSVToTable('student.csv');
-}
-
-
-
-/*
-function UserChanged(){
-      //for updating the image files..
-      var dirName = document.getElementById("selectionUser").value;
-      document.getElementById("nitin").innerHTML = dirName;
-      var chartPath = "users/" + dirName + "/1.png";
-      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
-      document.getElementById("img_user").src = chartPath;
-      <!--      document.getElementById("img_user").background-image = chartPath;
-      -->
-      //for updating the csv files..
-      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
-      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
-      }
-      function AssignmentChanged(){
-      var dirName = document.getElementById("selectionAssignment").value;
-      document.getElementById("nitin").innerHTML = dirName;
-      var chartPath = "assignments/" + dirName + "/1.png";
-      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
-      document.getElementById("img_assignment").src = chartPath;
-      //for updating the csv files..
-      <!-- document.getElementById("csv_student").csvToTable("data.csv"); -->
-      }
-      function ClickFun(){
-      document.getElementById("csv_student").innerHTML = "This is spaceholder for CSV file..";
-      csvFunction();
-      }
-    </script>
-    <script>
-      function csvFunction () {
-      alert("into jquery function for csv,,,");
-      $('#csv_student').CSVToTable('student.csv');
-      }
 */

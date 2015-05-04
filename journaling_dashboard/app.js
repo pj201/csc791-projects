@@ -10,7 +10,6 @@ var users = require('./routes/users');
 
 var app = express();
 
-
 var request = require('request');
 //for calling R script from node.js server..
 var http = require('http');
@@ -18,7 +17,6 @@ var spawn = require('child_process').spawn;
 // var hashmap = require('hashmap');
 //for priority queue implementation..
 var PriorityQueue = require('priorityqueuejs');
-
 
 /*Calling R code from node.js*/
 //Begin Section
@@ -33,12 +31,13 @@ var opts = {cwd: process.cwd(), // + '/public/rscripts',
 
 process.env.PARAM = 'Nitin';
 
-console.log("Awesome Nitin's opts: " + opts.cwd + ', ' + opts.env['YEAR']);
+console.log("Nitin's opts: " + opts.cwd + ', ' + opts.env['YEAR']);
 
 var RCall = ['--no-restore', '--no-save', opts.cwd + '/hello.R'];
 console.log("**********opts : " + opts);
 //console.log("this is the call to RCAll : ..." + RCall);
 var R = spawn('Rscript', RCall, opts.env);
+
 R.stdout.on('data', function(data){
   var str  = data.toString();
   console.log("NT_inside the stdout.on function.." + str);
@@ -58,8 +57,6 @@ R.on('exit', function(code){
 R.on('close', function(code){
   console.log("process code on call to 'close': " + code);  //code 0 for success....
 });
-/**/
-// End Section
 
 /*calling R code and displaying content on client..*/
 //Begin Section
@@ -238,7 +235,7 @@ sio.sockets.on('connection', function(socket){
 		 hateTweets++;
 		 tweetType = 'hate';
 	     }
-	     console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
+	     // console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
 	     //emit in JSON format to client
 	     socket.volatile.emit('ss-tweet', {
   	           name: data.user.screen_name,
