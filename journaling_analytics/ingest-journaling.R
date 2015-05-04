@@ -1,7 +1,7 @@
-############################################################
-# CSC791 P3: Function to ingest data from Journaling project
-# Paul Jones, pjones@ncsu.edu, Last updated: 4/4/2015
-############################################################
+################################################################
+# CSC791 P5: Function to ingest all data from Journaling project
+# Paul Jones, pjones@ncsu.edu, Last updated: 5/4/2015
+################################################################
 
 #library(Rcurl)
 #library(TimeSeries)
@@ -30,7 +30,7 @@ ingest_journaling <- function(fromTimestamp, toTimestamp) {
                  "type" = "find",
                  "query" = list(
                    "data.ProjId" = "journaling-chrome",
-                   "data.UserId" = "pjones",
+#                   "data.UserId" = "pjones",
                    "data.EvtTime" = list(
                      "$gte" = fromTimestamp,
                      "$lte" = toTimestamp

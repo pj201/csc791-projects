@@ -1,6 +1,6 @@
 ############################################################
-# CSC791 P3: Function to extract rules using Apriori from
-# Journaling data set. 
+# CSC791 P5: Function to extract rules using Apriori from
+# Journaling data set. For testing only!
 # Paul Jones, pjones@ncsu.edu, Last updated: 4/24/2015
 ############################################################
 

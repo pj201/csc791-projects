@@ -1,10 +1,10 @@
 ############################################################
-# CSC791 P3: Function to build and forecast based on
+# CSC791 P5: Function to build and forecast based on
 # a Holt-Winters time series model.
-# Paul Jones, pjones@ncsu.edu, Last updated: 4/6/2015
+# Paul Jones, pjones@ncsu.edu, Last updated: 5/4/2015
 ############################################################
 
-predict_hw <- function(timeseries, label="Unspecified") {
+predict_hw <- function(timeseries, label="All") {
 
   # [PJ] A Holt-Winters model takes into account three components of a time series,
   # controlled by the parameters Alpha, Beta and Gamma:
@@ -43,11 +43,12 @@ predict_hw <- function(timeseries, label="Unspecified") {
   forecast_hw <- forecast(fit_hw, level=c(80,95), robust=TRUE) #, find.frequency=TRUE)
   
   # Save to a fie
-  
-  png("../journaling_dashboard/public/images/HoltWinters.png")
+ 
+  filename <- paste("../journaling_dashboard/public/images/HoltWinters_",label,".png")
+  png(filename)
   #t <- paste("HoltWinters Forecasts for",label,sep=" ")
   # [PJ] Create a title, and plot the forecasts
-  plot(forecast(forecast_hw),main="HoltWinters",xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
+  plot(forecast(forecast_hw),main="",xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
   dev.off()
   
   

@@ -1,7 +1,11 @@
+#!/usr/bin/Rscript
+
 ############################################################
-# CSC791 P3: Main function to demonstrate streaming
-# time series analysis techniques in R.
-# Nitin,Paul,Kshitij,Dakota Last updated: 4/24/2015
+# CSC591/791 P5: Capstone project - script to extract a
+# time series of data for either all users, or a particular
+# user from Journaling data. Much of the code is based on
+# our original P3 submission for time series analysis in R.
+# Nitin,Paul,Kshitij,Dakota Last updated: 5/4/2015
 ############################################################
 
 ############################################################
@@ -13,18 +17,18 @@
 # Load libraries needed by this script
 library(forecast)
 library(stats)
-library(fGarch)
+#library(fGarch)
 
 # Set working directory to the directory of this source file
-this.dir <- dirname(parent.frame(2)$ofile)
-setwd(this.dir)
+#this.dir <- dirname(parent.frame(2)$ofile)
+#setwd(this.dir)
 
 # Load functions from other files
 source("ingest-journaling.R")
 source("preprocess.R")
-source("predict-ets.R")
-source("predict-arima.R")
-source("predict-garch.R")
+#source("predict-ets.R")
+#source("predict-arima.R")
+#source("predict-garch.R")
 source("predict-hw.R")
 source("association-rules.R")
 
@@ -37,6 +41,15 @@ sleep <- function(x)
   
 }
 
+# get command line arguments and username to extract
+args <- commandArgs(trailingOnly = TRUE)
+
+UNITYID <- Sys.getenv('UNITYID')
+print(UNITYID)
+
+ASSIGNMENT <- Sys.getenv('ASSIGNMENT')
+print(ASSIGNMENT)
+
 ############################################################
 # Ingest historic data and create time series objects
 ############################################################
@@ -44,93 +57,110 @@ sleep <- function(x)
 # Present Time stamp object 
 presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000;
 
-# Present Time stamp object for one month back (to get all historic data)
-previousTime<- presentTime  - 2592000000; 
+# Present Time stamp object for two months back (to get all historic data)
+previousTime<- presentTime  - 5184000000; 
 
-cat("**************************************************************\n")
-cat("* Welcome to a demo of time series analysis techniques in R! *\n")
-cat("**************************************************************\n\n")
+#cat("**************************************************************\n")
+#cat("* Welcome to a demo of time series analysis techniques in R! *\n")
+#cat("**************************************************************\n\n")
 
-cat("Press enter to fetch historical data from the CSC791 Journaling Trial...")
-t<-readline()
+#cat("Press enter to fetch historical data from the CSC791 Journaling Trial...")
+#t<-readline()
 
 # Fetch Data from Journaling project
 new_j_df <- ingest_journaling(previousTime, presentTime)
-# Extract rules from Journaling project
+
+# Filter data according to UNITYID if it is set
+if(UNITYID != "ALL")
+{
+  new_j_df <- new_j_df[new_j_df$UserId == UNITYID,]
+  LABEL <- UNITYID
+}
+
+# Filter data according to ASSIGNMENT if it is set
+if(ASSIGNMENT != "ALL")
+{
+  new_j_df <- new_j_df[grep(ASSIGNMENT, new_j_df$TaskName),]
+  LABEL <- ASSIGNMENT
+}
+
+# Extract association rules from Journaling project
 extract_rules(new_j_df)
 
 # Initialise timeseries object
 tsOld <- ts(c(0));
+
 # Binning data into 1 hour chunks.
 binSize <- 3600000;
+
 # Calculating number of bins for the historical pull.
 size <- (presentTime - previousTime)/binSize;
 
 # Get historic data from all 3 sources
 tsNull<- ts(c(0));
 
-cat("Press enter to create time series objects from the 3 datasets...")
-t<-readline()
+#cat("Press enter to create time series objects from the 3 datasets...")
+#t<-readline()
 
 history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
 
 # Run forecasting algorithms on historic data
 
-cat("\nPress enter to build prediction models on CSC791 Journaling activity data...")
-t<-readline()
+#cat("\nPress enter to build prediction models on CSC791 Journaling activity data...")
+#t<-readline()
 
-par(mfrow=c(2,2))
+#par(mfrow=c(2,2))
 
 cat("Building Holt-Winters model...\n")
-predict_hw(history_j_ts, label="Journaling")
-cat("Building GARCH model...\n")
-predict_garch(history_j_ts, label="Journaling")
-cat("Building ARIMA model...\n")
-predict_arima(history_j_ts, label="Journaling")
-cat("Building Exponential Smoothing model...\n")
-predict_ets(history_j_ts, label="Journaling")
+predict_hw(history_j_ts, label=LABEL)
+#cat("Building GARCH model...\n")
+#predict_garch(history_j_ts, label="Journaling")
+#cat("Building ARIMA model...\n")
+#predict_arima(history_j_ts, label="Journaling")
+#cat("Building Exponential Smoothing model...\n")
+#predict_ets(history_j_ts, label="Journaling")
 
-mtext("Time Series Forecasts for LAS Journaling Dataset",outer=TRUE,line=-1.5)
+#mtext("Time Series Forecasts for LAS Journaling Dataset",outer=TRUE,line=-1.5)
 
 ############################################################
 # Ingest continuous streaming data and make forecasts
 ############################################################
 
-cat("\nPress enter to update the prediction models in real-time (only runs one update for demo)...")
-t<-readline()
+#cat("\nPress enter to update the prediction models in real-time (only runs one update for demo)...")
+#t<-readline()
 
 #while(TRUE) {
 
   # Calculating number of bins
-  presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
-  previousTime <- presentTime - 60000; 
-  size <- (presentTime - previousTime)/binSize;
+  #presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
+  #previousTime <- presentTime - 60000; 
+  #size <- (presentTime - previousTime)/binSize;
 
   # Get new data for each time series
   
-  cat("Getting new data from CSC791 Journaling Trial...")
-  new_j_df <- ingest_journaling(previousTime, presentTime) 
+  #cat("Getting new data from CSC791 Journaling Trial...")
+  #new_j_df <- ingest_journaling(previousTime, presentTime) 
   
-  cat("\n\nUpdating time series...\n")
+  #cat("\n\nUpdating time series...\n")
   # If we have new data, pre-process to create time series
-  if(!is.null(new_j_df)) {
-  history_j_ts <- create_timeseries(new_j_df, history_j_ts, "UserId", "EvtTime", size)
-  }
+  #if(!is.null(new_j_df)) {
+  #history_j_ts <- create_timeseries(new_j_df, history_j_ts, "UserId", "EvtTime", size)
+  #}
 
   # Run forecasting algorithms to update for next time period
 
-  cat("\nUpdating prediction models for CSC791 Journaling activity data...\n")
-  par(mfrow=c(2,2))
-  cat("Updating Holt-Winters model...\n")
-  predict_hw(history_j_ts, label="Journaling")
-  cat("Updating GARCH model...\n")
-  predict_garch(history_j_ts, label="Journaling")
-  cat("Updating ARIMA model...\n")
-  predict_arima(history_j_ts, label="Journaling")
-  cat("Updating Exponential Smoothing model...\n")
-  predict_ets(history_j_ts, label="Journaling")
+  #cat("\nUpdating prediction models for CSC791 Journaling activity data...\n")
+  #par(mfrow=c(2,2))
+  #cat("Updating Holt-Winters model...\n")
+  #predict_hw(history_j_ts, label="Journaling")
+  #cat("Updating GARCH model...\n")
+  #predict_garch(history_j_ts, label="Journaling")
+  #cat("Updating ARIMA model...\n")
+  #predict_arima(history_j_ts, label="Journaling")
+  #cat("Updating Exponential Smoothing model...\n")
+  #predict_ets(history_j_ts, label="Journaling")
 
-  mtext("Time Series Forecasts for CSC791 Journaling Activity Dataset",outer=TRUE,line=-1.5)
+  #mtext("Time Series Forecasts for CSC791 Journaling Activity Dataset",outer=TRUE,line=-1.5)
 
   # Wait one minute betwen data requests 
   # (should be one hour in a real app)
