@@ -44,7 +44,7 @@ predict_hw <- function(timeseries, label="All") {
   
   # Save to a fie
  
-  filename <- paste("../journaling_dashboard/public/images/HoltWinters_",label,".png")
+  filename <- paste("../journaling_dashboard/public/images/HoltWinters_",label,".png",sep="")
   png(filename)
   #t <- paste("HoltWinters Forecasts for",label,sep=" ")
   # [PJ] Create a title, and plot the forecasts
