@@ -32,7 +32,7 @@ var opts = {cwd: process.cwd(), // + '/public/rscripts',
 
 
 
-
+/*
 console.log("Nitin's opts: " + opts.cwd + ', ' + opts.env['YEAR']);
 
 var RCall = ['--no-restore', '--no-save', opts.cwd + '/hello.R'];
@@ -59,6 +59,8 @@ R.on('exit', function(code){
 R.on('close', function(code){
   console.log("process code on call to 'close': " + code);  //code 0 for success....
 });
+*/
+
 
 /*calling R code and displaying content on client..*/
 //Begin Section
@@ -194,7 +196,7 @@ console.log("pathOfR : " + pathOfR);
 
 
       var RCall = ['--no-restore', '--no-save', pathOfR];
-      var R = spawn('Rscript', RCall, opts.env);
+      var R = spawn('Rscript', RCall);  //opts.env
       R.stdout.on('data', function(data){
         var str  = data.toString();
         console.log("NT_inside the stdout.on function.." + str);
@@ -213,6 +215,14 @@ console.log("pathOfR : " + pathOfR);
       //called after exit call
       R.on('close', function(code){
         console.log("process code on call to 'close': " + code);  //code 0 for success....
+        if(code == 0)
+        {
+          console.log("inside code 0..");
+          var _fileName = process.cwd() + '/public/images/HoltWinters_' + data.username.toString() + '.png';
+          console.log("Filename: " + _fileName);
+          socket.emit('UserDataResponse', {FilePath : _fileName});
+          console.log("Completed a socket emit call for user data response..");
+        }
       });
 
     });

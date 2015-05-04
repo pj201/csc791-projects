@@ -18,25 +18,75 @@
           <!-- <select id="selectionUser" onchange="alert(this.options[this.selectedIndex].text);">-->
           <select id="selectionUser" onchange="UserChanged()">
             <option value="" style="display:none">Choose a student</option>
-            <option value="u1">User 1</option>
-            <option value="u2">User 2</option>
-            <option value="u3">User 3</option>
-            <option value="u4">User 4</option>
-            <option value="u5">User 5</option>
+            <!--"kbansal","smransho","cmoon2","mschaudh","sdharenb","wzhang27","rmchung","mxu5","kmkhasni","xzou2","htang4","fameeta","dadesai","hguo5","pjones","pmahish","ptdikshi","shsu3","skalmad","sdavang","drmedd","ryang9","dbhat2",”sshen"
+            -->
+            <!-- For Viewing all user-->
+            <option value="ALL">ALL USERS</option>
+            <option value="kbansal">kbansal</option>
+            <option value="smransho">smransho</option>
+            <option value="cmoon2">cmoon2</option>
+            <option value="mschaudh">mschaudh</option>
+            <option value="sdharenb">sdharenb</option>
+            <option value="wzhang27">wzhang27</option>
+            <option value="rmchung">rmchung</option>
+            <option value="mxu5">mxu5</option>
+            <option value="kmkhasni">kmkhasni</option>
+            <option value="xzou2">xzou2</option>
+            <option value="htang4">htang4</option>
+            <option value="fameeta">fameeta</option>
+            <option value="dadesai">dadesai</option>
+            <option value="hguo5">hguo5</option>
+            <option value="pjones">pjones</option>
+            <option value="pmahish">pmahish</option>
+            <option value="ptdikshi">ptdikshi</option>
+            <option value="shsu3">shsu3</option>
+            <option value="skalmad">skalmad</option>
+            <option value="sdavang">sdavang</option>
+            <option value="drmedd">drmedd</option>
+            <option value="ryang9">ryang9</option>
+            <option value="dbhat2">dbhat2</option>
+            <option value="sshen">sshen</option>
           </select>
+          <button onclick="GetUserData()">Get User Data</button>
         </td>
         <td style="width:33%">Assignments:
           <select id="selectionAssignment" onchange="AssignmentChanged()">
             <option value="" disabled="" selected="">Select an Assignment</option>
-            <option value="a1">Assignment 1</option>
-            <option value="a2">Assignment 2</option>
-            <option value="a3">Assignment 3</option>
+            <!-- For Viewing all Assignments-->
+            <option value="ALL">ALL Assignments</option>
+            <option value="T1">Tutorial 1</option>
+            <option value="T2">Tutorial 2</option>
+            <option value="T3">Tutorial 3</option>
+            <option value="L1">Lab 1</option>
+            <option value="L2">Lab 2</option>
+            <option value="L3">Lab 3</option>
+            <option value="P1">Project 1</option>
+            <option value="P2">Project 2</option>
+            <option value="P3">Project 3</option>
+            <option value="P5">Project 5</option>
+            <option value="H1">Homework 1</option>
+            <option value="H2">Homework 2</option>
+            <option value="H3">Homework 3</option>
+            <option value="H4">Homework 4</option>
+            <option value="H5">Homework 5</option>
+            <option value="H6">Homework 6</option>
+            <option value="A1">Assignment 1</option>
+            <option value="A2">Assignment 2</option>
+            <option value="A3">Assignment 3</option>
+            <option value="A4">Assignment 4</option>
+            <option value="A5">Assignment 5</option>
+            <option value="A6">Assignment 6</option>
+            <option value="J1">JobAssignment 1</option>
+            <option value="B1">Bonus Assignment 1</option>
+            <option value="B2">Bonus Assignment 2</option>
+            <option value="E1">Exam 1</option>
           </select>
+          <button onclick="GetAssignmentData()">Get Assignment Data</button>
         </td>
       </tr>
       <tr>
         <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>
-        <td><img id="img_user" src="./public/images/spinner.gif" width="300" height="300">
+        <td><img id="img_user" src="/public/images/spinner.gif" width="300" height="300">
           <!-- <div id="img_user" SRC="spinner.gif" WIDTH="300" HEIGHT="300"></div>-->
         </td>
         <td><img id="img_assignment" src="/public/images/spinner.gif" width="300" height="300"></td>
@@ -60,45 +110,13 @@
       <!-- document.getElementById("selectionAssignment").addEventListener("onchange", AssignmentChanged); -->
       <!--    document.getElementById("nitin").innerHTML = document.getElementById("selectionUser").value ;
       -->
-      function UserChanged(){
-      //for updating the image files..
-      var dirName = document.getElementById("selectionUser").value;
-      document.getElementById("nitin").innerHTML = dirName;
-      var chartPath = "/public/images/users/" + dirName + "/1.png";
-      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
-      document.getElementById("img_user").src = chartPath;
-      <!--      document.getElementById("img_user").background-image = chartPath;
-      -->
-      //for updating the csv files..
-      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
-      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
-      }
-      function AssignmentChanged(){
-      var dirName = document.getElementById("selectionAssignment").value;
-      document.getElementById("nitin").innerHTML = dirName;
-      var chartPath = "assignments/" + dirName + "/1.png";
-      <!-- alert("selection changed for file path : ..." + chartPath);<!-- document.getElementById("") --> -->
-      document.getElementById("img_assignment").src = chartPath;
-      //for updating the csv files..
-      <!-- document.getElementById("csv_student").csvToTable("data.csv"); -->
-      }
-      function ClickFun(){
-      document.getElementById("csv_student").innerHTML = "This is spaceholder for CSV file..";
-      csvFunction();
-      }
-    </script>
-    <script>
-      function csvFunction () {
-      alert("into jquery function for csv,,,");
-      $('#csv_student').CSVToTable('student.csv');
-      }
     </script>
   </body>
   <p id="ss-pingpong"></p>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/javascripts/client.socket.io.js"></script>
   <script src="/javascripts/jquery.min.js"></script>
   <script src="/javascripts/bootstrap.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/javascripts/client.socket.io.js"></script>
   <!--
   <script src="jquery.csvToTable.js"></script>
   <script src="jquery-1.11.2.min.js"></script>

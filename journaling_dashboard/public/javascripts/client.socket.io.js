@@ -13,6 +13,11 @@ server.on('request', function(data){
 	document.getElementById("nitin").innerHTML = "This was after the button click Event.." + data;
 });
 
+server.on('UserDataResponse', function(data){
+	console.log("Reading file from path : " + data.FilePath.toString());
+	document.getElementById("img_user").src = data.FilePath.toString();
+});
+
 function ClickFun(){
 	alert("button clicked...");
       document.getElementById("csv_student").innerHTML = "This is spaceholder for CSV file..";
@@ -22,6 +27,7 @@ function ClickFun(){
       console.log("username: " + _username + ", Assignment : " + _assignment);
       document.getElementById("selectionUser").value;
       server.emit('request', {username: _username, assignment: _assignment});
+      
 }
 
 
@@ -56,8 +62,8 @@ function GetUserData(){
       console.log("call received for get user data...passing call to server..");
       server.emit('GetUserData', {username: UserName});
 
-      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
-      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
+      // <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
+      // <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
 }
 
 
