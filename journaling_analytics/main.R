@@ -17,7 +17,6 @@
 # Load libraries needed by this script
 library(forecast)
 library(stats)
-#library(fGarch)
 
 # Set working directory to the directory of this source file
 #this.dir <- dirname(parent.frame(2)$ofile)
@@ -26,9 +25,6 @@ library(stats)
 # Load functions from other files
 source("ingest-journaling.R")
 source("preprocess.R")
-#source("predict-ets.R")
-#source("predict-arima.R")
-#source("predict-garch.R")
 source("predict-hw.R")
 source("association-rules.R")
 
@@ -41,12 +37,14 @@ sleep <- function(x)
   
 }
 
-# get command line arguments and username to extract
+# get command line arguments
 args <- commandArgs(trailingOnly = TRUE)
 
+# Set wanted userId from environment
 UNITYID <- Sys.getenv('UNITYID')
 print(UNITYID)
 
+# Set wanted assignment from environment
 ASSIGNMENT <- Sys.getenv('ASSIGNMENT')
 print(ASSIGNMENT)
 
@@ -59,13 +57,6 @@ presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000;
 
 # Present Time stamp object for two months back (to get all historic data)
 previousTime<- presentTime  - 5184000000; 
-
-#cat("**************************************************************\n")
-#cat("* Welcome to a demo of time series analysis techniques in R! *\n")
-#cat("**************************************************************\n\n")
-
-#cat("Press enter to fetch historical data from the CSC791 Journaling Trial...")
-#t<-readline()
 
 # Fetch Data from Journaling project
 new_j_df <- ingest_journaling(previousTime, presentTime)
@@ -96,76 +87,10 @@ binSize <- 3600000;
 # Calculating number of bins for the historical pull.
 size <- (presentTime - previousTime)/binSize;
 
-# Get historic data from all 3 sources
+# Create a timeSeries object from the dataframe
 tsNull<- ts(c(0));
-
-#cat("Press enter to create time series objects from the 3 datasets...")
-#t<-readline()
-
 history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
 
-# Run forecasting algorithms on historic data
-
-#cat("\nPress enter to build prediction models on CSC791 Journaling activity data...")
-#t<-readline()
-
-#par(mfrow=c(2,2))
-
+# Run HW forecasting algorithm on historic data and save PNG to file
 cat("Building Holt-Winters model...\n")
 predict_hw(history_j_ts, label=LABEL)
-#cat("Building GARCH model...\n")
-#predict_garch(history_j_ts, label="Journaling")
-#cat("Building ARIMA model...\n")
-#predict_arima(history_j_ts, label="Journaling")
-#cat("Building Exponential Smoothing model...\n")
-#predict_ets(history_j_ts, label="Journaling")
-
-#mtext("Time Series Forecasts for LAS Journaling Dataset",outer=TRUE,line=-1.5)
-
-############################################################
-# Ingest continuous streaming data and make forecasts
-############################################################
-
-#cat("\nPress enter to update the prediction models in real-time (only runs one update for demo)...")
-#t<-readline()
-
-#while(TRUE) {
-
-  # Calculating number of bins
-  #presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000 ;
-  #previousTime <- presentTime - 60000; 
-  #size <- (presentTime - previousTime)/binSize;
-
-  # Get new data for each time series
-  
-  #cat("Getting new data from CSC791 Journaling Trial...")
-  #new_j_df <- ingest_journaling(previousTime, presentTime) 
-  
-  #cat("\n\nUpdating time series...\n")
-  # If we have new data, pre-process to create time series
-  #if(!is.null(new_j_df)) {
-  #history_j_ts <- create_timeseries(new_j_df, history_j_ts, "UserId", "EvtTime", size)
-  #}
-
-  # Run forecasting algorithms to update for next time period
-
-  #cat("\nUpdating prediction models for CSC791 Journaling activity data...\n")
-  #par(mfrow=c(2,2))
-  #cat("Updating Holt-Winters model...\n")
-  #predict_hw(history_j_ts, label="Journaling")
-  #cat("Updating GARCH model...\n")
-  #predict_garch(history_j_ts, label="Journaling")
-  #cat("Updating ARIMA model...\n")
-  #predict_arima(history_j_ts, label="Journaling")
-  #cat("Updating Exponential Smoothing model...\n")
-  #predict_ets(history_j_ts, label="Journaling")
-
-  #mtext("Time Series Forecasts for CSC791 Journaling Activity Dataset",outer=TRUE,line=-1.5)
-
-  # Wait one minute betwen data requests 
-  # (should be one hour in a real app)
-  #sleep(60)
-  
-  # End of continuous ingest loop
-#}
-

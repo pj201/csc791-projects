@@ -42,11 +42,12 @@ predict_hw <- function(timeseries, label="All") {
   
   forecast_hw <- forecast(fit_hw, level=c(80,95), robust=TRUE) #, find.frequency=TRUE)
   
-  # Save to a fie
- 
+  # Save to a PNG file ready for the dashboard to pick up
   filename <- paste("../journaling_dashboard/public/images/HoltWinters_",label,".png",sep="")
   png(filename)
+  
   #t <- paste("HoltWinters Forecasts for",label,sep=" ")
+
   # [PJ] Create a title, and plot the forecasts
   plot(forecast(forecast_hw),main="",xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
   dev.off()
