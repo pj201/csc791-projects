@@ -10,42 +10,212 @@ var users = require('./routes/users');
 
 var app = express();
 
-//Connect to twitter and open stream
-var Twit = require('ntwitter');
 
-//Initialize variables to connect to twitter
-var twitterConsumerKey = process.env.TWITTER_CONSUMER_KEY;
-var twitterConsumerSecret = process.env.TWITTER_CONSUMER_SECRET;
-var twitterAccessKey = process.env.TWITTER_ACCESS_TOKEN;
-var twitterAccessSecret = process.env.TWITTER_ACCESS_SECRET;
+var request = require('request');
+//for calling R script from node.js server..
+var http = require('http');
+var spawn = require('child_process').spawn;
+// var hashmap = require('hashmap');
+//for priority queue implementation..
+var PriorityQueue = require('priorityqueuejs');
 
-var mytweets = new Twit({
-    consumer_key: twitterConsumerKey,
-    consumer_secret: twitterConsumerSecret,
-    access_token_key: twitterAccessKey,
-    access_token_secret: twitterAccessSecret
+
+/*Calling R code from node.js*/
+//Begin Section
+/**/
+var env = process.env;
+var opts = {cwd: process.cwd(), // + '/public/rscripts', 
+            env: process.env
+            };
+
+// opts.env['YEAR']=1987; 
+// opts.env['NAME']='@NitinTak';
+
+process.env.PARAM = 'Nitin';
+
+console.log("Awesome Nitin's opts: " + opts.cwd + ', ' + opts.env['YEAR']);
+
+var RCall = ['--no-restore', '--no-save', opts.cwd + '/hello.R'];
+console.log("**********opts : " + opts);
+//console.log("this is the call to RCAll : ..." + RCall);
+var R = spawn('Rscript', RCall, opts.env);
+R.stdout.on('data', function(data){
+  var str  = data.toString();
+  console.log("NT_inside the stdout.on function.." + str);
 });
-
-mytweets.verifyCredentials(function(err,data){
-    if(err){
-        console.log('Error in authenticating twitter access keys:..');
-        console.dir(err);
-        process.exit(1);    //for graceful failure
+//calld before close call..
+R.on('exit', function(code){
+    console.log('got exit code: '+code)
+    if(code==1){
+        // do something special
+        // done()
+    }else{
+        // done()
     }
+    return null;
 });
+//called after exit call
+R.on('close', function(code){
+  console.log("process code on call to 'close': " + code);  //code 0 for success....
+});
+/**/
+// End Section
+
+/*calling R code and displaying content on client..*/
+//Begin Section
+//http://leapon.tumblr.com/post/10168944986/run-r-script-and-display-graph-using-node-js
+var exec = require('child_process').exec;
+// var server = express(); //.createServer();
+// server.configure(function(){    
+//     server.use(express.static(__dirname + '/public/rscripts'));
+// });
+/*
+app.get('/', function(req, res) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write('R graph<br>');
+    process.env.R_WEB_DIR = process.cwd() + '/public/rscripts';
+    var child = exec('Rscript ./public/rscripts/graph.R', function(error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+        res.write('<img src='+process.cwd() +"/public/rscripts/xyplot.png" + '/>');
+        // res.write('<img src="/xyplot.png"/>');
+        res.end('<br>end of R script');
+    });
+});
+app.listen(1337, "127.0.0.1");
+console.log('Server running at http://127.0.0.1:1337/');
+*/
+//End Section
 
 
-//start a server
+//logic for top-k over URL's using count-min-sketch and priority Queue..
+//Begin Section
+/*
+var createCountMinSketch = require("count-min-sketch");
+var sketch = createCountMinSketch();
+var URLs = ['A','B','C','A'];
+var smallGrp = [];
+smallGrp.push(URLs[2]);
+smallGrp.push(URLs[1]);
+smallGrp.push(URLs[0]);
+
+console.log(smallGrp);
+smallGrp.sort();
+console.log("after sorting: " + smallGrp);
+
+console.log("updating a count min sketch..");
+for(var i=0; i<URLs.length ; i++)
+{
+  console.log("URL: " + URLs[i].toString());
+  sketch.update(URLs[i].toString(), 1);
+}
+console.log("querying sketch for A : " + sketch.query('A'));
+console.log("querying sketch for B : " + sketch.query('B'));
+console.log("querying sketch for C : " + sketch.query('C'));
+console.log("querying sketch for D : " + sketch.query('D'));
+var queue = new PriorityQueue();
+
+*/
+/*Algorithm...
+1. decide on the maxumum size of priority Queue
+MAX_Q_SIZE to contain number of elements..
+2. Check the count of the element in sketch.
+3. loop into the priority Q and check if the element 
+is present, if present then update the element in priority Q.
+
+
+*/
+
+
+//End Section..
+
+
+/*Call to journialing service..*/
+//Begin Section..
+/*
+request({
+    url: 'https://las-skylr-token.oscar.ncsu.edu/api/data/document/query', //URL to hit
+    method: 'POST',
+    body: {
+'type':'find',
+  'query':{'data.UserId':'pjones',
+            'data.ProjId':"journaling-chrome",
+              'data.EvtTime':{"$gte":1423717200000,
+                              "$lte":1424303540000}}
+    },
+    headers:
+    {
+    'Content-Type': 'application/json', 
+    'AuthToken':'9c0c9a9e0ec177d2bf9fd55edff5272cb2a3b9823babf07d6f762e3f9c9509bb'
+    },
+    json : true
+}, function(error, response, body){
+  console.log("nitinnnnnnnnnn is awesome...");
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(response.statusCode, body);
+}
+});
+*/
+//End Section..
+
+
+/*Journaling Dashboard...*/
+//Begin Section..
 var server = require( 'http' ).createServer(app);
 var port = 3000;
 server.listen(port);
-console.log("Socket.io server listening at http://127.0.0.1: "+port);
+console.log("Dashboard server listening at http://127.0.0.1: "+port);
 
-//variable to maintain twitter stats
-var totalTweets = 0;
-var loveTweets = 0;
-var hateTweets = 0;
-var tweetType = "default";
+//create WebSockets - server object and attach to http server
+var sio = require( 'socket.io' ).listen(server);
+sio.sockets.on('connection', function(socket){
+    console.log('Dashboard client connected...');
+    
+//for sending events to dashboard client...
+// socket.volatile.emit
+    socket.emit('startup', {json : 'sample'});
+
+    socket.emit('request', {json : 'sample'});
+    socket.on('request', function(data){
+      console.log('request received from client: ' +data.username.toString());
+    });
+    
+// On receiving events from dashboard client..
+    socket.on('GetData', function(data) {
+      console.log('Message from Dashboard client..');
+    });
+
+//Handle Disconnect
+    socket.on('disconnect', function() {
+        console.log('Dashboard client disconnected');
+    });
+});
+//End Section..
+
+
+
+
+/*For TWitter..*/
+//Begin Section..
+//start a server
+// var server = require( 'http' ).createServer(app);
+// var port = 3000;
+// server.listen(port);
+// console.log("Socket.io server listening at http://127.0.0.1: "+port);
+//End Section
+
+/*Twitter stream analysis..
+//Begin Section..
+// //variable to maintain twitter stats
+// var totalTweets = 0;
+// var loveTweets = 0;
+// var hateTweets = 0;
+// var tweetType = "default";
 
 //create WebSockets - server object and attach to http server
 var sio = require( 'socket.io' ).listen(server);
@@ -68,7 +238,7 @@ sio.sockets.on('connection', function(socket){
 		 hateTweets++;
 		 tweetType = 'hate';
 	     }
-	     // console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
+	     console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
 	     //emit in JSON format to client
 	     socket.volatile.emit('ss-tweet', {
   	           name: data.user.screen_name,
@@ -89,6 +259,8 @@ sio.sockets.on('connection', function(socket){
         console.log('Web client disconnected');
     });
 });
+*/
+//End Section..
 
 
 // view engine setup
