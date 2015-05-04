@@ -1,7 +1,7 @@
 ############################################################
 # CSC791 P5: Function to extract rules using Apriori from
 # Journaling data set. For testing only!
-# Paul Jones, pjones@ncsu.edu, Last updated: 4/24/2015
+# Paul Jones, pjones@ncsu.edu, Last updated: 5/4/2015
 ############################################################
 
 #install.packages("arules")
@@ -66,15 +66,18 @@ trans <- read.transactions("transJourn.csv" , format = c("single"), sep = ',',
 # the specified threshhold in the function.						   
 rules <- apriori(trans, parameter = list(supp = 0.1, conf = 0.8))
 
-# Plotting a Support vs Confidence graph for the rules which satisfy the support and confidence 
-# threshhold.
+# Plotting a Support vs Confidence graph for the rules which satisfy the support
+# and confidence threshold.
 png("../journaling_dashboard/public/images/Support-Confidence.png")
 plot(rules, control=list(jitter=2))
 dev.off()
 
+# Extract the top-3 rules
 rules_high_lift <- head(sort(rules, by="lift"), 3)
 inspect(rules_high_lift)
 
+# Plot in a graph and save to a file
+png("../journaling_dashboard/public/images/Arules-Graph.png")
 plot(rules_high_lift, method="graph", control=list(type="items"))
 
 }
