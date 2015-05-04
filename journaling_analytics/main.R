@@ -14,6 +14,16 @@
 
 # IMPORTANT: Run 'install.R' script before this one!
 
+# to change the working directory to journaling_analytics
+print("Start of main.R")
+print(getwd())
+direc <- getwd()
+new_dir <- paste(direc, "/../journaling_analytics", sep = "")
+setwd(new_dir)
+print("updated directory...")
+print(getwd())
+
+
 # Load libraries needed by this script
 library(forecast)
 library(stats)
