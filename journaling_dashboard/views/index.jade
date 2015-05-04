@@ -10,9 +10,9 @@ html
     table(style='width:90%', border-width='2', border='1', align='center')
       tr(height='50px', align='center')
         button(onclick='ClickFun()') Click me!
-        td(style='width:33%')
-          | Aggregate : 
-          #nitin  
+        // <td style="width:33%">Aggregate :
+        // <div id="nitin"> </div>
+        // </td>
         td(style='width:34%')
           | Users:
           // <select id="selectionUser" onchange="alert(this.options[this.selectedIndex].text);">
@@ -21,24 +21,24 @@ html
             //
               "kbansal","smransho","cmoon2","mschaudh","sdharenb","wzhang27","rmchung","mxu5","kmkhasni","xzou2","htang4","fameeta","dadesai","hguo5","pjones","pmahish","ptdikshi","shsu3","skalmad","sdavang","drmedd","ryang9","dbhat2",”sshen"
             // For Viewing all user
-            option(value='ALL') ALL USERS
+            option(value='ALL') ALL
             option(value='kbansal') kbansal
             option(value='smransho') smransho
             option(value='cmoon2') cmoon2
             option(value='mschaudh') mschaudh
             option(value='sdharenb') sdharenb
             option(value='wzhang27') wzhang27
-            option(value='rmchung') rmchung
-            option(value='mxu5') mxu5
-            option(value='kmkhasni') kmkhasni
-            option(value='xzou2') xzou2
+            // <option value="rmchung">rmchung</option>
+            // <option value="mxu5">mxu5</option>
+            // <option value="kmkhasni">kmkhasni</option>
+            // <option value="xzou2">xzou2</option>
             option(value='htang4') htang4
-            option(value='fameeta') fameeta
+            // <option value="fameeta">fameeta</option>
             option(value='dadesai') dadesai
-            option(value='hguo5') hguo5
+            // <option value="hguo5">hguo5</option>
             option(value='pjones') pjones
             option(value='pmahish') pmahish
-            option(value='ptdikshi') ptdikshi
+            // <option value="ptdikshi">ptdikshi</option>
             option(value='shsu3') shsu3
             option(value='skalmad') skalmad
             option(value='sdavang') sdavang
@@ -52,7 +52,7 @@ html
           select#selectionAssignment(onchange='AssignmentChanged()')
             option(value='', disabled='', selected='') Select an Assignment
             // For Viewing all Assignments
-            option(value='ALL') ALL Assignments
+            option(value='ALL') ALL
             option(value='T1') Tutorial 1
             option(value='T2') Tutorial 2
             option(value='T3') Tutorial 3
@@ -81,21 +81,21 @@ html
             option(value='E1') Exam 1
           button(onclick='GetAssignmentData()') Get Assignment Data
       tr
-        td(width='inherit')
-          img#img_agg(src='spinner.gif', width='300', height='300')
+        // <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>
         td
-          img#img_user(src='/public/images/spinner.gif', width='300', height='300')
+          img#img_user(src='/images/spinner.gif', width='300', height='300')
           // <div id="img_user" SRC="spinner.gif" WIDTH="300" HEIGHT="300"></div>
         td
-          img#img_assignment(src='/public/images/spinner.gif', width='300', height='300')
-      tr
-        td(colspan='3')
-          #csv_student
-            | This is Student CSV source...
-            br
-            // <embed src = "student.csv">
-          #csv_data
-        td
+          img#img_assignment(src='/images/spinner.gif', width='300', height='300')
+      // <tr>
+      // <td colspan="3">
+      // <div id="csv_student">This is Student CSV source...<br>
+      // <embed src = "student.csv">
+      // </div>
+      // <div id="csv_data"></div>
+      // </td>
+      // <td></td>
+      // </tr>
     //
       <script src="/javascripts/jquery.min.js"></script>
       <script src="/javascripts/bootstrap.min.js"></script>

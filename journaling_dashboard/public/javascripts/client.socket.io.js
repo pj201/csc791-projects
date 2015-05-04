@@ -6,16 +6,21 @@ var tabSpaces = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb
 console.log('Client: Connecting to server '+server_name);
 
 server.on('startup', function(data) {
-	document.getElementById("nitin").innerHTML = "Event received from server with data : " + data;
+	// document.getElementById("nitin").innerHTML = "Event received from server with data : " + data;
 });
 
 server.on('request', function(data){
-	document.getElementById("nitin").innerHTML = "This was after the button click Event.." + data;
+	// document.getElementById("nitin").innerHTML = "This was after the button click Event.." + data;
 });
 
 server.on('UserDataResponse', function(data){
 	console.log("Reading file from path : " + data.FilePath.toString());
 	document.getElementById("img_user").src = data.FilePath.toString();
+});
+
+server.on('UserAssignmentResponse', function(data){
+	console.log("Reading file from path : " + data.FilePath.toString());
+	document.getElementById("img_assignment").src = data.FilePath.toString();
 });
 
 function ClickFun(){
@@ -27,7 +32,7 @@ function ClickFun(){
       console.log("username: " + _username + ", Assignment : " + _assignment);
       document.getElementById("selectionUser").value;
       server.emit('request', {username: _username, assignment: _assignment});
-      
+
 }
 
 
@@ -54,7 +59,7 @@ function UserChanged(){
 function GetUserData(){
       //for updating the image files..
       var UserName = document.getElementById("selectionUser").value;
-      document.getElementById("nitin").innerHTML = UserName;
+      // document.getElementById("nitin").innerHTML = UserName;
 //      var chartPath = "/public/images/users/" + dirName + "/1.png";
       // document.getElementById("img_user").src = chartPath;
       
@@ -82,7 +87,7 @@ function AssignmentChanged(){
 
 function GetAssignmentData(){
       var Assignment = document.getElementById("selectionAssignment").value;
-      document.getElementById("nitin").innerHTML = dirName;
+      // document.getElementById("nitin").innerHTML = dirName;
       // var chartPath = "assignments/" + dirName + "/1.png";
       // document.getElementById("img_assignment").src = chartPath;
 

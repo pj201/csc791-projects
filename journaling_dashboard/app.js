@@ -228,6 +228,59 @@ console.log("pathOfR : " + pathOfR);
 
     });
     
+
+//for fetcing the assignment data event handler..
+socket.on('GetAssignmentData', function(data){
+      console.log('request received from client: ' + data.assignment.toString());
+
+      //call the rscript for this user..
+      process.env.UNITYID = "ALL";
+      process.env.ASSIGNMENT = data.assignment.toString();
+      RscriptName = "main.R";
+      pathOfR = process.cwd() + '/../journaling_analytics/' + RscriptName;
+
+console.log("data.assignment : " + data.assignment.toString());
+
+      var RCall = ['--no-restore', '--no-save', pathOfR];
+      var R = spawn('Rscript', RCall);  //opts.env
+      R.stdout.on('data', function(data){
+        var str  = data.toString();
+        console.log("NT_inside the stdout.on function.." + str);
+      });
+      //calld before close call..
+      R.on('exit', function(code){
+          console.log('got exit code: '+code)
+          if(code==1){
+              // do something special
+              // done()
+          }else{
+              // done()
+          }
+          return null;
+      });
+      //called after exit call
+      R.on('close', function(code){
+        console.log("process code on call to 'close': " + code);  //code 0 for success....
+        if(code == 0)
+        {
+          console.log("inside code 0..");
+          // var _fileName = 'file://' + process.cwd() + '/public/images/HoltWinters_' + data.username.toString() + '.png';
+          var _fileName = '/images/HoltWinters_' + data.assignment.toString() + '.png';
+          console.log("Filename: " + _fileName);
+          socket.emit('UserAssignmentResponse', {FilePath : _fileName});
+          console.log("Completed a socket emit call for user data response..");
+        }
+      });
+
+    });
+
+
+
+
+
+
+
+
 // On receiving events from dashboard client..
     socket.on('GetData', function(data) {
       console.log('Message from Dashboard client..');
