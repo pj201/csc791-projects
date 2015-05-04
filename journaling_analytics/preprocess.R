@@ -1,18 +1,20 @@
 ############################################################
-# CSC791 P3: Function to preprocess data into time series
-# AUTHOR(S), Last updated: 3/28/2015
+# CSC791 P5: Function to preprocess data into time series
+# Kshitij Sharma, Last updated: 5/4/2015
 ############################################################
 
 create_timeseries <- function(df, tsOld, UserAttr, TimeAttr, binSize) {
   
   # Extract User and Time attributes 
   #df.sub <- subset(df, select = c(UserAttr, TimeAttr))
+
   # Bin the data according to binSize
   v <-df$EvtTime #above line is redundant.
   r <- tapply(v, cut(v, binSize), length, simplify=FALSE)
   r[sapply(r, is.null)] <- 0
   matrix <- do.call(rbind, r)
   tsmatrix <- ts(matrix)
+
   # Extract data from tsOld by converting back to a vector
   v <- as.matrix(tsOld)
   
