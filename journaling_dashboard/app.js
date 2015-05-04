@@ -29,7 +29,9 @@ var opts = {cwd: process.cwd(), // + '/public/rscripts',
 // opts.env['YEAR']=1987; 
 // opts.env['NAME']='@NitinTak';
 
-process.env.PARAM = 'Nitin';
+
+
+
 
 console.log("Nitin's opts: " + opts.cwd + ', ' + opts.env['YEAR']);
 
@@ -178,8 +180,41 @@ sio.sockets.on('connection', function(socket){
     socket.emit('startup', {json : 'sample'});
 
     socket.emit('request', {json : 'sample'});
-    socket.on('request', function(data){
-      console.log('request received from client: ' +data.username.toString());
+    socket.on('GetUserData', function(data){
+      console.log('request received from client: ' + data.username.toString());
+
+      //call the rscript for this user..
+      process.env.UNITYID = data.username.toString();
+      process.env.ASSIGNMENT = "ALL";
+      RscriptName = "main.R";
+      pathOfR = process.cwd() + '/../journaling_analytics/' + RscriptName;
+
+console.log("data.username : " + data.username.toString());
+console.log("pathOfR : " + pathOfR);
+
+
+      var RCall = ['--no-restore', '--no-save', pathOfR];
+      var R = spawn('Rscript', RCall, opts.env);
+      R.stdout.on('data', function(data){
+        var str  = data.toString();
+        console.log("NT_inside the stdout.on function.." + str);
+      });
+      //calld before close call..
+      R.on('exit', function(code){
+          console.log('got exit code: '+code)
+          if(code==1){
+              // do something special
+              // done()
+          }else{
+              // done()
+          }
+          return null;
+      });
+      //called after exit call
+      R.on('close', function(code){
+        console.log("process code on call to 'close': " + code);  //code 0 for success....
+      });
+
     });
     
 // On receiving events from dashboard client..
@@ -198,7 +233,7 @@ sio.sockets.on('connection', function(socket){
 
 
 /*For TWitter..*/
-//Begin Section..
+//Begin Section..lllllllllllllllllllllllll
 //start a server
 // var server = require( 'http' ).createServer(app);
 // var port = 3000;
