@@ -18,18 +18,68 @@ html
           // <select id="selectionUser" onchange="alert(this.options[this.selectedIndex].text);">
           select#selectionUser(onchange='UserChanged()')
             option(value='', style='display:none') Choose a student
-            option(value='u1') User 1
-            option(value='u2') User 2
-            option(value='u3') User 3
-            option(value='u4') User 4
-            option(value='u5') User 5
+            //
+              "kbansal","smransho","cmoon2","mschaudh","sdharenb","wzhang27","rmchung","mxu5","kmkhasni","xzou2","htang4","fameeta","dadesai","hguo5","pjones","pmahish","ptdikshi","shsu3","skalmad","sdavang","drmedd","ryang9","dbhat2",”sshen"
+            // For Viewing all user
+            option(value='ALL') ALL USERS
+            option(value='kbansal') kbansal
+            option(value='smransho') smransho
+            option(value='cmoon2') cmoon2
+            option(value='mschaudh') mschaudh
+            option(value='sdharenb') sdharenb
+            option(value='wzhang27') wzhang27
+            option(value='rmchung') rmchung
+            option(value='mxu5') mxu5
+            option(value='kmkhasni') kmkhasni
+            option(value='xzou2') xzou2
+            option(value='htang4') htang4
+            option(value='fameeta') fameeta
+            option(value='dadesai') dadesai
+            option(value='hguo5') hguo5
+            option(value='pjones') pjones
+            option(value='pmahish') pmahish
+            option(value='ptdikshi') ptdikshi
+            option(value='shsu3') shsu3
+            option(value='skalmad') skalmad
+            option(value='sdavang') sdavang
+            option(value='drmedd') drmedd
+            option(value='ryang9') ryang9
+            option(value='dbhat2') dbhat2
+            option(value='sshen') sshen
+          button(onclick='GetUserData()') Get User Data
         td(style='width:33%')
           | Assignments:
           select#selectionAssignment(onchange='AssignmentChanged()')
             option(value='', disabled='', selected='') Select an Assignment
-            option(value='a1') Assignment 1
-            option(value='a2') Assignment 2
-            option(value='a3') Assignment 3
+            // For Viewing all Assignments
+            option(value='ALL') ALL Assignments
+            option(value='T1') Tutorial 1
+            option(value='T2') Tutorial 2
+            option(value='T3') Tutorial 3
+            option(value='L1') Lab 1
+            option(value='L2') Lab 2
+            option(value='L3') Lab 3
+            option(value='P1') Project 1
+            option(value='P2') Project 2
+            option(value='P3') Project 3
+            option(value='P5') Project 5
+            option(value='H1') Homework 1
+            option(value='H2') Homework 2
+            option(value='H3') Homework 3
+            option(value='H4') Homework 4
+            option(value='H5') Homework 5
+            option(value='H6') Homework 6
+            option(value='A1') Assignment 1
+            option(value='A2') Assignment 2
+            option(value='A3') Assignment 3
+            option(value='A4') Assignment 4
+            option(value='A5') Assignment 5
+            option(value='A6') Assignment 6
+            option(value='J1') JobAssignment 1
+            option(value='B1') Bonus Assignment 1
+            option(value='B2') Bonus Assignment 2
+            option(value='E1') Exam 1
+          button(onclick='GetAssignmentData()') Get Assignment Data
       tr
         td(width='inherit')
           img#img_agg(src='spinner.gif', width='300', height='300')

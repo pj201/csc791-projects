@@ -24,7 +24,10 @@ function ClickFun(){
       server.emit('request', {username: _username, assignment: _assignment});
 }
 
+
 function UserChanged(){
+
+/*  
       //for updating the image files..
       var dirName = document.getElementById("selectionUser").value;
       document.getElementById("nitin").innerHTML = dirName;
@@ -36,9 +39,30 @@ function UserChanged(){
       //for updating the csv files..
       <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
       <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
+*/
+
 }
 
+
+
+function GetUserData(){
+      //for updating the image files..
+      var UserName = document.getElementById("selectionUser").value;
+      document.getElementById("nitin").innerHTML = UserName;
+//      var chartPath = "/public/images/users/" + dirName + "/1.png";
+      // document.getElementById("img_user").src = chartPath;
+      
+      //send an event to server to execute the rscript to fetch data..
+      console.log("call received for get user data...passing call to server..");
+      server.emit('GetUserData', {username: UserName});
+
+      <!-- alert("calling for csv section.." + document.getElementById("csv_student").innerHTML);
+      <!-- document.getElementById("csv_student").CSVToTable("student.csv"); -->
+}
+
+
 function AssignmentChanged(){
+	/*
       var dirName = document.getElementById("selectionAssignment").value;
       document.getElementById("nitin").innerHTML = dirName;
       var chartPath = "assignments/" + dirName + "/1.png";
@@ -46,6 +70,19 @@ function AssignmentChanged(){
       document.getElementById("img_assignment").src = chartPath;
       //for updating the csv files..
       <!-- document.getElementById("csv_student").csvToTable("data.csv"); -->
+*/
+
+}
+
+function GetAssignmentData(){
+      var Assignment = document.getElementById("selectionAssignment").value;
+      document.getElementById("nitin").innerHTML = dirName;
+      // var chartPath = "assignments/" + dirName + "/1.png";
+      // document.getElementById("img_assignment").src = chartPath;
+
+      //send an event to server to exec rscript for particular assignment..
+      server.emit('GetAssignmentData', {assignment: Assignment});
+
 }
 
 function csvFunction () {
