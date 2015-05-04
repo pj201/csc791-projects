@@ -218,7 +218,8 @@ console.log("pathOfR : " + pathOfR);
         if(code == 0)
         {
           console.log("inside code 0..");
-          var _fileName = process.cwd() + '/public/images/HoltWinters_' + data.username.toString() + '.png';
+          // var _fileName = 'file://' + process.cwd() + '/public/images/HoltWinters_' + data.username.toString() + '.png';
+          var _fileName = '/images/HoltWinters_' + data.username.toString() + '.png';
           console.log("Filename: " + _fileName);
           socket.emit('UserDataResponse', {FilePath : _fileName});
           console.log("Completed a socket emit call for user data response..");
