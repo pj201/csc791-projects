@@ -199,7 +199,7 @@ console.log("pathOfR : " + pathOfR);
       var R = spawn('Rscript', RCall);  //opts.env
       R.stdout.on('data', function(data){
         var str  = data.toString();
-        console.log("NT_inside the stdout.on function.." + str);
+        console.log(str); //redirecting stdout of R to console..
       });
       //calld before close call..
       R.on('exit', function(code){
@@ -245,7 +245,7 @@ console.log("data.assignment : " + data.assignment.toString());
       var R = spawn('Rscript', RCall);  //opts.env
       R.stdout.on('data', function(data){
         var str  = data.toString();
-        console.log("NT_inside the stdout.on function.." + str);
+        console.log(str); //redirecting stdout of R to console..
       });
       //calld before close call..
       R.on('exit', function(code){
