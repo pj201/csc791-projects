@@ -16,13 +16,12 @@
 
 # to change the working directory to journaling_analytics
 print("Start of main.R")
-print(getwd())
+#print(getwd())
 direc <- getwd()
 new_dir <- paste(direc, "/../journaling_analytics", sep = "")
 setwd(new_dir)
-print("updated directory...")
+#print("updated directory...")
 print(getwd())
-
 
 # Load libraries needed by this script
 library(forecast)
@@ -36,9 +35,8 @@ library(stats)
 source("ingest-journaling.R")
 source("preprocess.R")
 source("predict-hw.R")
-# source("association-rules.R")
-print("NT_Working fine till here..")
-
+source("association-rules.R")
+#print("NT_Working fine till here..")
 
 # Sleep function (used by streaming ingest loop)
 sleep <- function(x)
@@ -73,7 +71,7 @@ previousTime<- presentTime  - 5184000000;
 # Fetch Data from Journaling project
 new_j_df <- ingest_journaling(previousTime, presentTime)
 
-print("NT_ytest1")
+#print("NT_ytest1")
 
 # Filter data according to UNITYID if it is set
 if(UNITYID != "ALL")
@@ -89,11 +87,11 @@ if(ASSIGNMENT != "ALL")
   LABEL <- ASSIGNMENT
 }
 
-print("NT_test 2")
+#print("NT_test 2")
 # Extract association rules from Journaling project
-# extract_rules(new_j_df)
+extract_rules(new_j_df)
 
-print("NT_test 3")
+#print("NT_test 3")
 # Initialise timeseries object
 tsOld <- ts(c(0));
 
@@ -108,10 +106,10 @@ size <- (presentTime - previousTime)/binSize;
 tsNull<- ts(c(0));
 history_j_ts <- create_timeseries(new_j_df, tsNull, "UserId", "EvtTime", size)
 
-print("NT_test 5")
+#print("NT_test 5")
 
 # Run HW forecasting algorithm on historic data and save PNG to file
 cat("Building Holt-Winters model...\n")
 predict_hw(history_j_ts, label=LABEL)
 
-print("NT_test 5")
+#print("NT_test 5")
