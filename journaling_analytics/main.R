@@ -32,7 +32,8 @@ library(stats)
 #setwd(this.dir)
 
 # Load functions from other files
-source("ingest-journaling.R")
+source("ingest-journaling-urls.R")
+source("ingest-journaling-files.R")
 source("preprocess.R")
 source("predict-hw.R")
 source("association-rules.R")
@@ -68,7 +69,11 @@ presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000;
 previousTime <- presentTime - 5184000000; 
 
 # Fetch Data from Journaling project
-new_j_df <- ingest_journaling(previousTime, presentTime)
+new_j_df <- ingest_journaling_urls(previousTime, presentTime)
+#new_j_df_files <- ingest_journaling_files(previousTime,presentTime)
+
+# Concatenate the two data frames
+#new_j_df <- rbind(new_j_df_urls, new_j_df_files)
 
 # Default label 
 LABEL <- "ALL"

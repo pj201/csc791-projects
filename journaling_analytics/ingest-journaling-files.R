@@ -1,6 +1,6 @@
 ################################################################
-# CSC791 P5: Function to ingest all data from Journaling project
-# Paul Jones, pjones@ncsu.edu, Last updated: 5/4/2015
+# CSC791 P5: Function to ingest File data from Journaling project
+# Paul Jones, pjones@ncsu.edu, Last updated: 5/5/2015
 ################################################################
 
 #library(Rcurl)
@@ -10,7 +10,7 @@ library(httr)
 library(RJSONIO)
 
 # Returns an object containing a time series of CSC791 Journaling data since timestamp
-ingest_journaling <- function(fromTimestamp, toTimestamp) {
+ingest_journaling_files <- function(fromTimestamp, toTimestamp) {
   
   # Get latest data - equivalent curl command looks like:
   # curl -H "Content-Type: application/json" 
@@ -29,7 +29,7 @@ ingest_journaling <- function(fromTimestamp, toTimestamp) {
                body = toJSON(list(
                  "type" = "find",
                  "query" = list(
-                   "data.ProjId" = "journaling-chrome",
+                   "data.ProjId" = "journaling-ubuntu",
 #                   "data.UserId" = "pjones",
                    "data.EvtTime" = list(
                      "$gte" = fromTimestamp,
