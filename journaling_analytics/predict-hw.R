@@ -49,9 +49,8 @@ predict_hw <- function(timeseries, label="All") {
   #t <- paste("HoltWinters Forecasts for",label,sep=" ")
 
   # [PJ] Create a title, and plot the forecasts
-  plot(forecast(forecast_hw),main="",xlab="Bin number (1 bin=1 hour)",ylab="Events per bin")
+  plot(forecast(forecast_hw),main="",xlab="Hours (covers previous 2 months)",ylab="Events per hour")
   dev.off()
-  
   
 }
 
