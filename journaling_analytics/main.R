@@ -5,7 +5,7 @@
 # time series of data for either all users, or a particular
 # user from Journaling data. Much of the code is based on
 # our original P3 submission for time series analysis in R.
-# Nitin,Paul,Kshitij,Dakota Last updated: 5/4/2015
+# Nitin,Paul,Kshitij,Dakota Last updated: 5/5/2015
 ############################################################
 
 ############################################################
@@ -14,7 +14,7 @@
 
 # IMPORTANT: Run 'install.R' script before this one!
 
-# to change the working directory to journaling_analytics
+# Change the working directory to journaling_analytics
 print("Start of main.R")
 #print(getwd())
 direc <- getwd()
@@ -65,7 +65,7 @@ print(ASSIGNMENT)
 presentTime <- as.numeric(as.POSIXct(Sys.time(),origin="1970-01-01"))*1000;
 
 # Present Time stamp object for two months back (to get all historic data)
-previousTime<- presentTime  - 5184000000; 
+previousTime <- presentTime - 5184000000; 
 
 # Fetch Data from Journaling project
 new_j_df <- ingest_journaling(previousTime, presentTime)
@@ -87,7 +87,13 @@ if(ASSIGNMENT != "ALL")
   LABEL <- ASSIGNMENT
 }
 
-# Extract association rules from Journaling project
+# Remove rows corresponding to certain URLs we don't care about
+# specifically, those containing localhost and newtab. 
+# Commented out since this can remove all association rules for some users!
+#new_j_df <- new_j_df[grep("localhost", new_j_df$WebURL, invert=TRUE),]
+#new_j_df <- new_j_df[grep("newtab", new_j_df$WebURL, invert=TRUE),]
+
+# Extract association rules from Journaling project and save PNGs to file
 extract_rules(new_j_df)
 
 # Initialise timeseries object
