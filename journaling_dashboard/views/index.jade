@@ -12,7 +12,7 @@ html
       // Realtime Activity plots per User/Assignments
       // Latset APRIORI Association Rules (Filtered by Users/Assignments above)
       tr(height='50px', align='center')
-        <button onclick="ClickFun()">Tell me more!</button>
+        button(onclick='ClickFun()', align='center') Tell me more!
         // <td style="width:33%">Aggregate :
         // <div id="nitin"> </div>
         // </td>
@@ -49,7 +49,7 @@ html
             option(value='ryang9') ryang9
             option(value='dbhat2') dbhat2
             option(value='sshen') sshen
-          button(onclick='GetUserData()') Get User Data
+          button(onclick='GetUserData()') Filter by User
         td(style='width:33%')
           | Assignments:
           select#selectionAssignment(onchange='AssignmentChanged()')
@@ -82,26 +82,26 @@ html
             // <option value="B1">Bonus Assignment 1</option>
             // <option value="B2">Bonus Assignment 2</option>
             option(value='E1') Exam 1
-          button(onclick='GetAssignmentData()') Get Assignment Data
+          button(onclick='GetAssignmentData()') Filter by Assignment
       tr
         td(colspan='2')
           h4 Realtime Activity Predictions per User/Assignments using Holt-Winters model
       tr
         // <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>
-        td
+        td(align='center')
           img#img_user(src='/images/spinner.gif', width='450', height='300')
           // <div id="img_user" SRC="spinner.gif" WIDTH="300" HEIGHT="300"></div>
-        td
+        td(align='center')
           img#img_assignment(src='/images/spinner.gif', width='450', height='300')
       tr
         td(colspan='2')
           h4 Latest APRIORI Association Rules (Filtered by Users/Assignments above)
       tr
         // <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>
-        td
+        td(align='center')
           img#img_sup_conf(src='/images/spinner.gif', width='450', height='300')
           // <div id="img_user" SRC="spinner.gif" WIDTH="300" HEIGHT="300"></div>
-        td
+        td(align='center')
           img#img_top_association(src='/images/spinner.gif', width='450', height='300')
     script.
       //document.getElementById("selectionUser").addEventListener("onchange", UserChanged);
