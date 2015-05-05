@@ -4,7 +4,7 @@
 # - Paul Jones, pjones@ncsu.edu
 # - Kshitij Sharma, ksharma3@ncsu.edu 
 # - Nitin Tak, ntak@ncsu.edu
-# Last Updated: 5/4/15
+# Last Updated: 5/5/15
 ##################################################
 
 To install:
@@ -12,7 +12,7 @@ To install:
 * cd journaling_analytics
 * Rscript install.R
 
-** If you don't have Rscript installed, use 'sudo apt-get install R-base'
+** If you don't have Rscript installed, use 'sudo apt-get install r-base'
 ** If you get an error that Rscript has no CRAN mirror set, add the following lines
    to /etc/R/Rprofile.site
 
@@ -32,11 +32,13 @@ To run:
 * cd journaling_dashboard
 * node app.js
 
-Then point your browser to localhost:3000
+Then point your browser to localhost:3000, and follow
+instructions in the 'Tell Me More' pop-up for some
+interesting things to try!
 
 --------------------------------------------------
 
 Documentation:
 
-See report 'capstone-journaling.pdf' in Dropbox. 
+See comprehensive report 'capstone-journaling.pdf'. 
 
