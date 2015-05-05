@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dashboard Test</title>
+    <title>Journaling Situational Awareness Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
   </head>
   <body style="background-color:#55ACEE">
-    <h1 align="center" style="color: #FFFFFF; font-weight: bold">Journaling Dashboard</h1>
-    <table style="width:90%" border-width="2" border="1" align="center">
+    <h1 align="center" style="color: #FFFFFF; font-weight: bold">Journaling Situational Awareness Dashboard</h1>
+    <h3 align="center" style="color: #FFFFFF; font-weight: bold">(for CSC591/791 Advanced Algorithms class - showing URL data only)</h3>
+    <table style="width:90%" border-width="2" border="3" align="center">
+      <!-- Realtime Activity plots per User/Assignments-->
+      <!-- Latset APRIORI Association Rules (Filtered by Users/Assignments above)-->
+      <tr>
+        <td colspan="2" align="center">
+          <button onclick="ClickFun()">Tell me more!</button>
+        </td>
+      </tr>
       <tr height="50px" align="center">
-        <button onclick="ClickFun()">Click me!</button>
         <!-- <td style="width:33%">Aggregate :-->
         <!-- <div id="nitin"> </div>-->
         <!-- </td>-->
@@ -47,64 +54,68 @@
             <option value="dbhat2">dbhat2</option>
             <option value="sshen">sshen</option>
           </select>
-          <button onclick="GetUserData()">Get User Data</button>
+          <button onclick="GetUserData()">Filter by User</button>
         </td>
         <td style="width:33%">Assignments:
           <select id="selectionAssignment" onchange="AssignmentChanged()">
             <option value="" disabled="" selected="">Select an Assignment</option>
             <!-- For Viewing all Assignments-->
             <option value="ALL">ALL</option>
-            <option value="T1">Tutorial 1</option>
-            <option value="T2">Tutorial 2</option>
+            <!-- <option value="T1">Tutorial 1</option>-->
+            <!-- <option value="T2">Tutorial 2</option>-->
             <option value="T3">Tutorial 3</option>
-            <option value="L1">Lab 1</option>
-            <option value="L2">Lab 2</option>
-            <option value="L3">Lab 3</option>
+            <!-- <option value="L1">Lab 1</option>-->
+            <!-- <option value="L2">Lab 2</option>-->
+            <!-- <option value="L3">Lab 3</option>-->
             <option value="P1">Project 1</option>
             <option value="P2">Project 2</option>
             <option value="P3">Project 3</option>
             <option value="P5">Project 5</option>
-            <option value="H1">Homework 1</option>
-            <option value="H2">Homework 2</option>
+            <!-- <option value="H1">Homework 1</option>-->
+            <!-- <option value="H2">Homework 2</option>-->
             <option value="H3">Homework 3</option>
             <option value="H4">Homework 4</option>
             <option value="H5">Homework 5</option>
             <option value="H6">Homework 6</option>
-            <option value="A1">Assignment 1</option>
-            <option value="A2">Assignment 2</option>
-            <option value="A3">Assignment 3</option>
-            <option value="A4">Assignment 4</option>
-            <option value="A5">Assignment 5</option>
-            <option value="A6">Assignment 6</option>
-            <option value="J1">JobAssignment 1</option>
-            <option value="B1">Bonus Assignment 1</option>
-            <option value="B2">Bonus Assignment 2</option>
+            <!-- <option value="A1">Ad-hoc 1</option>-->
+            <!-- <option value="A2">Ad-hoc 2</option>-->
+            <!-- <option value="A3">Ad-hoc 3</option>-->
+            <option value="A4">Ad-hoc 4</option>
+            <option value="A5">Ad-hoc 5</option>
+            <option value="A6">Ad-hoc 6</option>
+            <!-- <option value="J1">JobAssignment 1</option>-->
+            <!-- <option value="B1">Bonus Assignment 1</option>-->
+            <!-- <option value="B2">Bonus Assignment 2</option>-->
             <option value="E1">Exam 1</option>
           </select>
-          <button onclick="GetAssignmentData()">Get Assignment Data</button>
+          <button onclick="GetAssignmentData()">Filter by Assignment</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <h4>Realtime Activity Predictions per User/Assignments using Holt-Winters model</h4>
         </td>
       </tr>
       <tr>
         <!-- <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>-->
-        <td><img id="img_user" src="/images/spinner.gif" width="300" height="300">
+        <td align="center"><img id="img_user" src="/images/spinner.gif" width="450" height="300">
           <!-- <div id="img_user" SRC="spinner.gif" WIDTH="300" HEIGHT="300"></div>-->
         </td>
-        <td><img id="img_assignment" src="/images/spinner.gif" width="300" height="300"></td>
+        <td align="center"><img id="img_assignment" src="/images/spinner.gif" width="450" height="300"></td>
       </tr>
-      <!-- <tr>-->
-      <!-- <td colspan="3">-->
-      <!-- <div id="csv_student">This is Student CSV source...<br>-->
-      <!-- <embed src = "student.csv">-->
-      <!-- </div>-->
-      <!-- <div id="csv_data"></div>-->
-      <!-- </td>-->
-      <!-- <td></td>-->
-      <!-- </tr>-->
+      <tr>
+        <td colspan="2">
+          <h4>Latest APRIORI Association Rules (Filtered by Users/Assignments above)</h4>
+        </td>
+      </tr>
+      <tr>
+        <!-- <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>-->
+        <td align="center"><img id="img_sup_conf" src="/images/spinner.gif" width="450" height="300">
+          <!-- <div id="img_user" SRC="spinner.gif" WIDTH="300" HEIGHT="300"></div>-->
+        </td>
+        <td align="center"><img id="img_top_association" src="/images/spinner.gif" width="450" height="300"></td>
+      </tr>
     </table>
-    <!--
-    <script src="/javascripts/jquery.min.js"></script>
-    <script src="/javascripts/bootstrap.min.js"></script>
-    -->
     <script>
       //document.getElementById("selectionUser").addEventListener("onchange", UserChanged);
       <!-- document.getElementById("selectionAssignment").addEventListener("onchange", AssignmentChanged); -->
