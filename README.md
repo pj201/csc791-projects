@@ -9,7 +9,10 @@
 
 To install:
 
-*To have a working R in Ubuntu, following entries have to be made:
+* cd journaling_dashboard
+* sudo npm install
+
+* To have a working R in Ubuntu, following entries have to be made:
 (http://www.r-bloggers.com/permanently-setting-the-cran-repository/)
 Setting the CRAN repository so that it does not ask every time you try to install a package. 
 This is accomplished through a setting in one of the Rprofile files.  
