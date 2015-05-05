@@ -26,40 +26,6 @@ var opts = {cwd: process.cwd(), // + '/public/rscripts',
             env: process.env
             };
 
-// opts.env['YEAR']=1987; 
-// opts.env['NAME']='@NitinTak';
-
-
-
-
-/*
-console.log("Nitin's opts: " + opts.cwd + ', ' + opts.env['YEAR']);
-
-var RCall = ['--no-restore', '--no-save', opts.cwd + '/hello.R'];
-console.log("**********opts : " + opts);
-//console.log("this is the call to RCAll : ..." + RCall);
-var R = spawn('Rscript', RCall, opts.env);
-
-R.stdout.on('data', function(data){
-  var str  = data.toString();
-  console.log("NT_inside the stdout.on function.." + str);
-});
-//calld before close call..
-R.on('exit', function(code){
-    console.log('got exit code: '+code)
-    if(code==1){
-        // do something special
-        // done()
-    }else{
-        // done()
-    }
-    return null;
-});
-//called after exit call
-R.on('close', function(code){
-  console.log("process code on call to 'close': " + code);  //code 0 for success....
-});
-*/
 
 
 /*calling R code and displaying content on client..*/
@@ -129,8 +95,6 @@ is present, if present then update the element in priority Q.
 
 
 */
-
-
 //End Section..
 
 
@@ -283,16 +247,17 @@ console.log("data.assignment : " + data.assignment.toString());
     });
 
 
-
-
-
-
-
-
-// On receiving events from dashboard client..
-    socket.on('GetData', function(data) {
-      console.log('Message from Dashboard client..');
-    });
+    //on completion of top-k analysis, emmit the results to the output..
+    setInterval(function(){
+            // console.log("sending url to front end..");
+            var randomNumber = Math.random();
+            socket.emit('ShowTopK', { url1 : 'Top first URL', count1 : 500*randomNumber,
+                              url2 : 'Top second URL', count2 : 400*randomNumber,
+                              url3 : 'Top third URL', count3 : 300*randomNumber,
+                              url4 : 'Top fourth URL', count4 : 200*randomNumber,
+                              url5 : 'Top fifth URL', count5 : 100*randomNumber});
+            
+        }, 500+Math.round(500*Math.random()));    
 
 //Handle Disconnect
     socket.on('disconnect', function() {
@@ -301,70 +266,6 @@ console.log("data.assignment : " + data.assignment.toString());
 });
 //End Section..
 
-
-
-
-/*For TWitter..*/
-//Begin Section..lllllllllllllllllllllllll
-//start a server
-// var server = require( 'http' ).createServer(app);
-// var port = 3000;
-// server.listen(port);
-// console.log("Socket.io server listening at http://127.0.0.1: "+port);
-//End Section
-
-/*Twitter stream analysis..
-//Begin Section..
-// //variable to maintain twitter stats
-// var totalTweets = 0;
-// var loveTweets = 0;
-// var hateTweets = 0;
-// var tweetType = "default";
-
-//create WebSockets - server object and attach to http server
-var sio = require( 'socket.io' ).listen(server);
-sio.sockets.on('connection', function(socket){
-    console.log('Web client connected');
-    
-    mytweets.stream('statuses/filter',{'track':'love, hate'}, function(stream) {
-        stream.on('data', function (data) {
-             totalTweets++;
-	     //Check if the tweet has both love and hate in it
-             if((data.text.toLowerCase().search('love') !== -1) && (data.text.toLowerCase().search('hate') !== -1)) {
-                 loveTweets++; hateTweets++;
-		 tweetType = "both";
-	     } else if(data.text.toLowerCase().search('love') !== -1) {
-                 //Tweet has only 'love'
-		 loveTweets++;
-		 tweetType = "love";
-	     } else if(data.text.toLowerCase().search('hate') !== -1) {
-                 //Tweet has only 'hate'
-		 hateTweets++;
-		 tweetType = 'hate';
-	     }
-	     // console.log(tweetType + " --> " + data.user.screen_name + ": " + data.text);
-	     //emit in JSON format to client
-	     socket.volatile.emit('ss-tweet', {
-  	           name: data.user.screen_name,
-                   tweet: data.text,
-                   actualTweets: totalTweets,
-              	   loveTweets: loveTweets,
-		   hateTweets: hateTweets,
-		   lovePercent: Math.round(loveTweets / (loveTweets + hateTweets) * 100),
-		   hatePercent: Math.round(hateTweets / (loveTweets + hateTweets) * 100),
-		   tweetType: tweetType
-             });
-	    
-        });
-    });
-
-    //Handle Disconnect
-    socket.on('disconnect', function() {
-        console.log('Web client disconnected');
-    });
-});
-*/
-//End Section..
 
 
 // view engine setup

@@ -33,6 +33,19 @@ server.on('SupportConfidenceResponse', function(data){
 	document.getElementById("img_sup_conf").src = data.FilePath.toString();
 });
 
+server.on('ShowTopK', function(data){
+	console.log("data available for top k..");
+	document.getElementById("div_url1").innerHTML = data.url1;
+	document.getElementById("div_url2").innerHTML = data.url2;
+	document.getElementById("div_url3").innerHTML = data.url3;
+	document.getElementById("div_url4").innerHTML = data.url4;
+	document.getElementById("div_url5").innerHTML = data.url5;
+	document.getElementById("div_count1").innerHTML = data.count1;
+	document.getElementById("div_count2").innerHTML = data.count2;
+	document.getElementById("div_count3").innerHTML = data.count3;
+	document.getElementById("div_count4").innerHTML = data.count4;
+	document.getElementById("div_count5").innerHTML = data.count5;
+});
 
 function ClickFun(){
 	alert("button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...button clicked...");

@@ -8,12 +8,48 @@ html
   body(style='background-color:#55ACEE')
     h1(align='center', style='color: #FFFFFF; font-weight: bold') Journaling Situational Awareness Dashboard
     h3(align='center', style='color: #FFFFFF; font-weight: bold') (for CSC591/791 Advanced Algorithms class - showing URL data only)
-    table(style='width:90%', border-width='2', border='1', align='center')
+    table(style='width:90%', border-width='2', border='3', align='center')
       // Realtime Activity plots per User/Assignments
       // Latset APRIORI Association Rules (Filtered by Users/Assignments above)
       tr
         td(colspan='2', align='center')
           button(onclick='ClickFun()') Tell me more!
+      tr
+        td(align='center', colspan='2')
+          table(style='width:100%', border-width='2', border='2', align='center"')
+            tr
+              td(colspan='2')
+                h4  Real-time Top-K Heavy Hitters using Count-Min Sketch
+            tr
+              td(align='center', width='80%')
+                h5 URL's
+              td(align='center', width='20%')
+                h5 Count Value
+            tr
+              td(align='center')
+                #div_url1
+              td(align='center')
+                #div_count1
+            tr
+              td(align='center')
+                #div_url2
+              td(align='center')
+                #div_count2
+            tr
+              td(align='center')
+                #div_url3
+              td(align='center')
+                #div_count3
+            tr
+              td(align='center')
+                #div_url4
+              td(align='center')
+                #div_count4
+            tr
+              td(align='center')
+                #div_url5
+              td(align='center')
+                #div_count5
       tr(height='50px', align='center')
         // <td style="width:33%">Aggregate :
         // <div id="nitin"> </div>
