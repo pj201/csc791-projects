@@ -23,6 +23,17 @@ server.on('UserAssignmentResponse', function(data){
 	document.getElementById("img_assignment").src = data.FilePath.toString();
 });
 
+server.on('ArulesGraphResponse', function(data){
+	console.log("Reading file from path : " + data.FilePath.toString());
+	document.getElementById("img_top_association").src = data.FilePath.toString();
+});
+
+server.on('SupportConfidenceResponse', function(data){
+	console.log("Reading file from path : " + data.FilePath.toString());
+	document.getElementById("img_sup_conf").src = data.FilePath.toString();
+});
+
+
 function ClickFun(){
 	alert("button clicked...");
       document.getElementById("csv_student").innerHTML = "This is spaceholder for CSV file..";
@@ -90,7 +101,8 @@ function GetAssignmentData(){
       // document.getElementById("nitin").innerHTML = dirName;
       // var chartPath = "assignments/" + dirName + "/1.png";
       // document.getElementById("img_assignment").src = chartPath;
-
+// Arules-Graph.png
+//Support-Confidence.png
       //send an event to server to exec rscript for particular assignment..
       server.emit('GetAssignmentData', {assignment: Assignment});
 

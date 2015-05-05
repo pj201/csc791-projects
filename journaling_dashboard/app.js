@@ -221,8 +221,12 @@ console.log("pathOfR : " + pathOfR);
           // var _fileName = 'file://' + process.cwd() + '/public/images/HoltWinters_' + data.username.toString() + '.png';
           var _fileName = '/images/HoltWinters_' + data.username.toString() + '.png';
           console.log("Filename: " + _fileName);
+          var Arules-Graph = '/images/Arules-Graph.png';
+          var Support-Confidence = '/images/Support-Confidence.png';
           socket.emit('UserDataResponse', {FilePath : _fileName});
-          console.log("Completed a socket emit call for user data response..");
+          socket.emit('ArulesGraphResponse', {FilePath : Arules-Graph});
+          socket.emit('SupportConfidenceResponse', {FilePath : Support-Confidence});
+          
         }
       });
 
@@ -266,8 +270,12 @@ console.log("data.assignment : " + data.assignment.toString());
           console.log("inside code 0..");
           // var _fileName = 'file://' + process.cwd() + '/public/images/HoltWinters_' + data.username.toString() + '.png';
           var _fileName = '/images/HoltWinters_' + data.assignment.toString() + '.png';
+          var Arules-Graph = '/images/Arules-Graph.png';
+          var Support-Confidence = '/images/Support-Confidence.png';
           console.log("Filename: " + _fileName);
           socket.emit('UserAssignmentResponse', {FilePath : _fileName});
+          socket.emit('ArulesGraphResponse', {FilePath : Arules-Graph});
+          socket.emit('SupportConfidenceResponse', {FilePath : Support-Confidence});
           console.log("Completed a socket emit call for user data response..");
         }
       });

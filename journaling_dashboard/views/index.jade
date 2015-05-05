@@ -7,12 +7,12 @@ html
     link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
   body(style='background-color:#55ACEE')
     h1(align='center', style='color: #FFFFFF; font-weight: bold') Journaling Situational Awareness Dashboard
-    h2(align='center', style='color: #FFFFFF; font-weight: bold') (for CSC591/791 Advanced Algorithms class - showing URL data only)
+    h3(align='center', style='color: #FFFFFF; font-weight: bold') (for CSC591/791 Advanced Algorithms class - showing URL data only)
     table(style='width:90%', border-width='2', border='3', align='center')
       // Realtime Activity plots per User/Assignments
       // Latset APRIORI Association Rules (Filtered by Users/Assignments above)
       tr(height='50px', align='center')
-        button(onclick='ClickFun()') Click me!
+        // <button onclick="ClickFun()">Click me!</button>
         // <td style="width:33%">Aggregate :
         // <div id="nitin"> </div>
         // </td>
@@ -85,7 +85,7 @@ html
           button(onclick='GetAssignmentData()') Get Assignment Data
       tr
         td(colspan='2')
-          h3 Realtime Activity Plots per User/Assignments
+          h4 Realtime Activity Predictions per User/Assignments using Holt-Winters model
       tr
         // <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>
         td
@@ -95,7 +95,7 @@ html
           img#img_assignment(src='/images/spinner.gif', width='450', height='300')
       tr
         td(colspan='2')
-          h3 Latset APRIORI Association Rules (Filtered by Users/Assignments above)
+          h4 Latest APRIORI Association Rules (Filtered by Users/Assignments above)
       tr
         // <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>
         td
