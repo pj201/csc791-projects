@@ -70,6 +70,9 @@ previousTime<- presentTime  - 5184000000;
 # Fetch Data from Journaling project
 new_j_df <- ingest_journaling(previousTime, presentTime)
 
+# Default label 
+LABEL <- "ALL"
+
 # Filter data according to UNITYID if it is set
 if(UNITYID != "ALL")
 {
