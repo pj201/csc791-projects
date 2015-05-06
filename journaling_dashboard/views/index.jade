@@ -5,6 +5,11 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+    style(type='text/css').
+      .WhiteBG
+      {
+      background-color:#ffffff;
+      }
   body(style='background-color:#55ACEE')
     h1(align='center', style='color: #FFFFFF; font-weight: bold') Journaling Situational Awareness Dashboard
     h3(align='center', style='color: #FFFFFF; font-weight: bold') (for CSC591/791 Advanced Algorithms class - showing URL data only)
@@ -12,44 +17,45 @@ html
       // Realtime Activity plots per User/Assignments
       // Latset APRIORI Association Rules (Filtered by Users/Assignments above)
       tr
-        td(colspan='2', align='center')
+        td(colspan='2', align='center', height='40px')
           button(onclick='ClickFun()') Tell me more!
       tr
-        td(align='center', colspan='2')
-          table(style='width:100%', border-width='2', border='2', align='center"')
-            tr
-              td(colspan='2')
-                h4  Real-time Top-K Heavy Hitters using Count-Min Sketch
-            tr
-              td(align='center', width='80%')
-                h5 URL's
-              td(align='center', width='20%')
-                h5 Count Value
-            tr
-              td(align='center')
-                #div_url1
-              td(align='center')
-                #div_count1
-            tr
-              td(align='center')
-                #div_url2
-              td(align='center')
-                #div_count2
-            tr
-              td(align='center')
-                #div_url3
-              td(align='center')
-                #div_count3
-            tr
-              td(align='center')
-                #div_url4
-              td(align='center')
-                #div_count4
-            tr
-              td(align='center')
-                #div_url5
-              td(align='center')
-                #div_count5
+        td.WhiteBG(align='center', colspan='2')
+          div
+            table(style='width:100%', border-width='2', border='2', align='center')
+              tr
+                td(colspan='2')
+                  h4  Real-time Top-K Heavy Hitters using Count-Min Sketch
+              tr
+                td(align='center', width='80%')
+                  h5 URL's
+                td(align='center', width='20%')
+                  h5 Count Value
+              tr
+                td(align='center')
+                  #div_url1
+                td(align='center')
+                  #div_count1
+              tr
+                td(align='center')
+                  #div_url2
+                td(align='center')
+                  #div_count2
+              tr
+                td(align='center')
+                  #div_url3
+                td(align='center')
+                  #div_count3
+              tr
+                td(align='center')
+                  #div_url4
+                td(align='center')
+                  #div_count4
+              tr
+                td(align='center')
+                  #div_url5
+                td(align='center')
+                  #div_count5
       tr(height='50px', align='center')
         // <td style="width:33%">Aggregate :
         // <div id="nitin"> </div>
@@ -133,7 +139,7 @@ html
           img#img_assignment(src='/images/spinner.gif', width='450', height='300')
       tr
         td(colspan='2')
-          h4 Latest APRIORI Association Rules (Filtered by Users/Assignments above)
+          h4 Latest Apriori Association Rules (Filtered by User/Assignment above)
       tr
         // <td width="inherit"><img id="img_agg" src="spinner.gif" width="300" height="300"></td>
         td(align='center')

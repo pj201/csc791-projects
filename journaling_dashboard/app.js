@@ -11,6 +11,123 @@ var users = require('./routes/users');
 var app = express();
 
 var request = require('request');
+
+//Initializing sketch.
+//Import library
+var createCountMinSketch = require("count-min-sketch");
+var tranSketch = createCountMinSketch();
+
+// Initializing variables for Journaling Pre-processing.
+
+var inActiv = 3600000;
+var prevEvtTime=0;
+var transId = 0;
+
+// Defining Curl Headers
+presentTime = (new Date).getTime();
+previousTime = presentTime  - 2592000000;
+
+var skylrUrl = 'https://las-skylr-token.oscar.ncsu.edu/api/data/document/query';
+var curlHeader = {
+        'Content-Type': 'application/json',
+        'AuthToken':'9c0c9a9e0ec177d2bf9fd55edff5272cb2a3b9823babf07d6f762e3f9c9509bb'
+       };
+var curlBody = {'type':'find',
+      'query':{'data.UserId':'pjones',
+              'data.ProjId':"journaling-chrome",
+                'data.EvtTime':{"$gte":previousTime,
+                                "$lte":presentTime}}
+        };
+
+
+// This function sorts and removes duplicates from each transaction.
+   function purge(a) {
+      return a.sort().filter(function(item, pos, ary) {
+         return !pos || item != ary[pos - 1];
+     })
+ }
+
+// Priority Queue with TopK implementation using Sketches
+function compare(a,b) {
+  if (tranSketch.query(a.url) > tranSketch.query(b.url))
+     return -1;
+  if (tranSketch.query(a.url) < tranSketch.query(b.url))
+    return 1;
+  return 0;
+} 
+
+var enq = function(arr, a) {
+    var index = -1;
+  for(i=0; i < arr.length; i++) {
+     if( arr[i].url == a.url) {
+   index = i;
+   arr[i].count = a.count;
+   break;
+   }
+  }
+  if(index == -1) {
+  arr.push(a);
+  }
+   arr.sort(compare); 
+        if(arr.length > 8) {
+        arr.pop();
+         }
+}
+
+// Custom indexOf function.
+function arrayObjectIndexOf(myArray, searchTerm, property) {
+    for(var i = 0, len = myArray.length; i < len; i++) {
+     for(var k = 0; k < myArray[i].length; k++) {
+        if (myArray[i][k][property] === searchTerm) {
+      return i;}
+      }
+    }
+    return -1;
+}
+
+var GenerateCandidate = function(array, setSize) {
+var newArray=[];
+for(i=0; i < array.length; i++){
+        for(j=i+1; j < array.length; j++) {
+                var arry1 = array[i];
+                var arry2 = array[j];
+                var flag=1;
+                for(k=0; k < setSize-1; k++){
+                        if(arry1[k].url != arry2[k].url) {
+                        flag=0;
+                        }
+                if(flag) {
+                var newarry1 = arry1.slice();
+                newarry1.push(arry2[setSize-1]);
+                newArray.push(newarry1);
+                }       
+                }
+        }
+ }
+ return newArray;
+}
+
+ 
+var sets = function(input, size){
+    var results = [], result, mask, total = Math.pow(2, input.length);
+    for(mask = 0; mask < total; mask++){
+        result = [];
+        i = input.length - 1;
+        do{
+            if( (mask & (1 << i)) !== 0){
+                result.push(input[i].url);
+            }
+        }while(i--);
+        if( result.length >= size){
+            results.push(result);
+        }
+    }
+    results.pop();
+    return results;
+};
+
+
+
 //for calling R script from node.js server..
 var http = require('http');
 var spawn = require('child_process').spawn;
@@ -141,11 +258,13 @@ var sio = require( 'socket.io' ).listen(server);
 sio.sockets.on('connection', function(socket){
     console.log('Dashboard client connected...');
     
-//for sending events to dashboard client...
-// socket.volatile.emit
-    socket.emit('startup', {json : 'sample'});
-
-    socket.emit('request', {json : 'sample'});
+    
+  
+  
+  
+  
+  
+  
     socket.on('GetUserData', function(data){
       console.log('request received from client: ' + data.username.toString());
 
@@ -247,17 +366,105 @@ console.log("data.assignment : " + data.assignment.toString());
     });
 
 
-    //on completion of top-k analysis, emmit the results to the output..
+ //on completion of top-k analysis, emmit the results to the output..
     setInterval(function(){
-            // console.log("sending url to front end..");
-            var randomNumber = Math.random();
-            socket.emit('ShowTopK', { url1 : 'Top first URL', count1 : 500*randomNumber,
-                              url2 : 'Top second URL', count2 : 400*randomNumber,
-                              url3 : 'Top third URL', count3 : 300*randomNumber,
-                              url4 : 'Top fourth URL', count4 : 200*randomNumber,
-                              url5 : 'Top fifth URL', count5 : 100*randomNumber});
-            
-        }, 500+Math.round(500*Math.random()));    
+      request.post({
+      url: skylrUrl, //URL to hit
+      body: curlBody,
+      headers: curlHeader,
+      json : true}, function(error, response, body){
+      if(error) {
+        console.log(error);
+      } 
+      else {
+        // journArray is a List which contains Transaction objects(var urlList)
+        var journArray = [];
+        // urlList corresponds to one transaction which stores URL's(array of strings) 
+        var urlList = [];
+        for(var i = 0; i < body.data.length; i++) {
+          var WebURL = body.data[i].data.WebURL;
+          var EvtTime = body.data[i].data.EvtTime;
+          // We club all the web URL's into one transaction if there is no 
+          // inactivity duration greater than inActiv, else we start a new 
+          // transactionId. 
+          // If there is no activity for a period of inActiv duration, 
+          // we create a new transaction.
+          if(EvtTime - prevEvtTime > inActiv) {
+          transId=transId+1;
+          // Remove duplicates and sort each transaction URL's
+          urlList = purge(urlList);
+          journArray.push({url: urlList});
+          // assigning new instance
+          urlList=[];
+          }
+          urlList.push(WebURL);
+          prevEvtTime = EvtTime;
+        }
+        // Creating priority Queue
+        var topK = [];
+        // Creating 1-itemset Sketch
+        for(i=0; i < journArray.length; i++) {
+          for(j=0; j < journArray[i].url.length; j++){
+          tranSketch.update(journArray[i].url[j], 1);
+          enq(topK, {url: journArray[i].url[j], count: tranSketch.query(journArray[i].url[j])});
+          }
+        } 
+
+        socket.emit('ShowTopK', {  url1 : topK[0].url , count1 : topK[0].count,
+                 url2 : topK[1].url , count2 : topK[1].count,
+                 url3 : topK[2].url , count3 : topK[2].count,
+                 url4 : topK[3].url , count4 : topK[3].count,
+                 url5 : topK[4].url , count5 : topK[4].count});
+
+
+   console.log("^^^^^^^^^^^^^^^^^^^^^^^^*" + topK[0].url );
+   console.log("***************************" + topK[1].url );
+   console.log("***************************" + topK[2].url );
+   console.log("***************************" + topK[3].url );
+   console.log("***************************" + topK[4].url );
+   console.log("^^^^^^^^^^^^^^^^^^^^^^^^*" + topK[0].count );
+   console.log("***************************" + topK[1].count );
+   console.log("***************************" + topK[2].count );
+   console.log("***************************" + topK[3].count);
+   console.log("***************************" + topK[4].count);
+
+
+
+        // Creating 2-itemset TopK
+        var topK2 = [];            
+        for( i=0; i< topK.length; i++)
+        {
+          for(j=i+1; j<topK.length; j++)
+          {
+          var set = [topK[i],topK[j]];
+          topK2.push(set);
+          }
+        }
+
+        // Create 3-itemset topK
+        var pruned = [];
+        var cand = GenerateCandidate(topK2,2);
+        var flag = 0;
+        for(k=0;k<cand.length;k++) {
+          for(item=0; item < cand[k].length; item++) {
+          for(i=0; i<journArray.length; i++){
+            for(j=0; j<journArray[i].url.length; j++) {
+            if(journArray[i].url[j] != cand[k][item].url){
+              flag = 1;
+            }
+            }
+          }
+          if(flag) {
+            cand.splice( k, 1 );
+            flag=0;
+          }
+          }
+        }
+      }
+    }); 
+
+  }, 60000);   //refreshing every 10 minutes..600000
+  //+Math.round(500*Math.random())    
 
 //Handle Disconnect
     socket.on('disconnect', function() {
