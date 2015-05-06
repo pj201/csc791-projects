@@ -4,6 +4,7 @@
 # - Paul Jones, pjones@ncsu.edu
 # - Kshitij Sharma, ksharma3@ncsu.edu 
 # - Nitin Tak, ntak@ncsu.edu
+# - Dakota Medd, drmedd@ncsu.edu
 # Last Updated: 5/5/15
 ##################################################
 
@@ -22,7 +23,7 @@ To install:
      options(repos = r)
    })
 
-* cd journaling_dashboard
+* cd ../journaling_dashboard
 * sudo npm install
 
 --------------------------------------------------
@@ -35,6 +36,10 @@ To run:
 Then point your browser to localhost:3000, and follow
 instructions in the 'Tell Me More' pop-up for some
 interesting things to try!
+
+*** Please wait at least 2-3 minutes for the first set of 
+    data to appear in the dashboard! Subsequently, updates
+    will happen every minute. ***
 
 --------------------------------------------------
 
