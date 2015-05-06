@@ -1,0 +1,214 @@
+\begin{thebibliography}{10}
+
+\bibitem{agrawal1994fast}
+R.~Agrawal, R.~Srikant, et~al.
+\newblock Fast algorithms for mining association rules.
+\newblock In {\em Proc. 20th int. conf. very large data bases, VLDB}, volume
+  1215, pages 487--499, 1994.
+
+\bibitem{binks2014}
+A.~Amos-Binks and R.~Dahlberg.
+\newblock Streaming community random evolution algorithm for modularity
+  (unpublished).
+\newblock 2014.
+
+\bibitem{blei2003latent}
+D.~M. Blei, A.~Y. Ng, and M.~I. Jordan.
+\newblock Latent dirichlet allocation.
+\newblock {\em the Journal of machine Learning research}, 3:993--1022, 2003.
+
+\bibitem{motiftimeseries}
+N.~Castro and P.~J. Azevedo.
+\newblock Multiresolution motif discovery in time series.
+\newblock SIAM.
+
+\bibitem{spamc}
+C.-C. Chen, C.-Y. Tseng, and M.-S. Chen.
+\newblock Highly scalable sequential pattern mining based on mapreduce model on
+  the cloud.
+\newblock In {\em 2013 IEEE International Congress on Big Data}, pages
+  310--317. IEEE, 2013.
+
+\bibitem{de2011generalized}
+P.~De~Meo, E.~Ferrara, G.~Fiumara, and A.~Provetti.
+\newblock Generalized louvain method for community detection in large networks.
+\newblock In {\em Intelligent Systems Design and Applications (ISDA), 2011 11th
+  International Conference on}, pages 88--93. IEEE, 2011.
+
+\bibitem{dekel2009individual}
+O.~Dekel, S.~Shalev-Shwartz, and Y.~Singer.
+\newblock Individual sequence prediction using memory-efficient context trees.
+\newblock {\em Information Theory, IEEE Transactions on}, 55(11):5251--5262,
+  2009.
+
+\bibitem{eppstein2010listing}
+D.~Eppstein, M.~L{\"o}ffler, and D.~Strash.
+\newblock {\em Listing all maximal cliques in sparse graphs in near-optimal
+  time}.
+\newblock Springer, 2010.
+
+\bibitem{pspflor}
+I.~Florescu.
+\newblock {\em Probability and Stochastic Processes}.
+\newblock Wiley, 2015.
+
+\bibitem{hahsler2006model}
+M.~Hahsler.
+\newblock A model-based frequency constraint for mining associations from
+  transaction data.
+\newblock {\em Data Mining and Knowledge Discovery}, 13(2):137--166, 2006.
+
+\bibitem{harenberg2014community}
+S.~Harenberg, G.~Bello, L.~Gjeltema, S.~Ranshous, J.~Harlalka, R.~Seay,
+  K.~Padmanabhan, and N.~Samatova.
+\newblock Community detection in large-scale networks: a survey and empirical
+  evaluation.
+\newblock {\em Wiley Interdisciplinary Reviews: Computational Statistics},
+  6(6):426--439, 2014.
+
+\bibitem{hartmann2007prediction}
+M.~Hartmann and D.~Schreiber.
+\newblock Prediction algorithms for user actions.
+\newblock In {\em LWA}, pages 349--354, 2007.
+
+\bibitem{hinton2006reducing}
+G.~E. Hinton and R.~R. Salakhutdinov.
+\newblock Reducing the dimensionality of data with neural networks.
+\newblock {\em Science}, 313(5786):504--507, 2006.
+
+\bibitem{hinton2009replicated}
+G.~E. Hinton and R.~R. Salakhutdinov.
+\newblock Replicated softmax: an undirected topic model.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1607--1614, 2009.
+
+\bibitem{hochreiter1997long}
+S.~Hochreiter and J.~Schmidhuber.
+\newblock Long short-term memory.
+\newblock {\em Neural computation}, 9(8):1735--1780, 1997.
+
+\bibitem{hoffman2010online}
+M.~Hoffman, F.~R. Bach, and D.~M. Blei.
+\newblock Online learning for latent dirichlet allocation.
+\newblock In {\em advances in neural information processing systems}, pages
+  856--864, 2010.
+
+\bibitem{langkvist2014review}
+M.~L{\"a}ngkvist, L.~Karlsson, and A.~Loutfi.
+\newblock A review of unsupervised feature learning and deep learning for
+  time-series modeling.
+\newblock {\em Pattern Recognition Letters}, 42:11--24, 2014.
+
+\bibitem{bowtie}
+B.~Langmead and S.~L. Salzberg.
+\newblock Fast gapped-read alignment with bowtie 2.
+\newblock {\em Nature Methods}, 9:357--359, 2012.
+
+\bibitem{le2008representational}
+N.~Le~Roux and Y.~Bengio.
+\newblock Representational power of restricted boltzmann machines and deep
+  belief networks.
+\newblock {\em Neural Computation}, 20(6):1631--1649, 2008.
+
+\bibitem{marztalk}
+N.~Marz.
+\newblock A call for sanity in nosql.
+\newblock In {\em QCon London}, 2014.
+
+\bibitem{melard1984algorithm}
+G.~Melard.
+\newblock Algorithm as 197: A fast algorithm for the exact likelihood of
+  autoregressive-moving average models.
+\newblock {\em Applied Statistics}, pages 104--114, 1984.
+
+\bibitem{mikolov2013efficient}
+T.~Mikolov, K.~Chen, G.~Corrado, and J.~Dean.
+\newblock Efficient estimation of word representations in vector space.
+\newblock {\em arXiv preprint arXiv:1301.3781}, 2013.
+
+\bibitem{min2014deep}
+W.~Min, E.~Y. Ha, J.~Rowe, B.~Mott, and J.~Lester.
+\newblock Deep learning-based goal recognition in open-ended digital games.
+\newblock In {\em Tenth Artificial Intelligence and Interactive Digital
+  Entertainment Conference}, 2014.
+
+\bibitem{Needleman1970443}
+S.~B. Needleman and C.~D. Wunsch.
+\newblock A general method applicable to the search for similarities in the
+  amino acid sequence of two proteins.
+\newblock {\em Journal of Molecular Biology}, 48(3):443 -- 453, 1970.
+
+\bibitem{nevill1997identifying}
+C.~G. Nevill-Manning and I.~H. Witten.
+\newblock Identifying hierarchical strcture in sequences: A linear-time
+  algorithm.
+\newblock {\em J. Artif. Intell. Res.(JAIR)}, 7:67--82, 1997.
+
+\bibitem{ramage2009labeled}
+D.~Ramage, D.~Hall, R.~Nallapati, and C.~D. Manning.
+\newblock Labeled lda: A supervised topic model for credit attribution in
+  multi-labeled corpora.
+\newblock In {\em Proceedings of the 2009 Conference on Empirical Methods in
+  Natural Language Processing: Volume 1-Volume 1}, pages 248--256. Association
+  for Computational Linguistics, 2009.
+
+\bibitem{riedy2013multithreaded}
+J.~Riedy and D.~A. Bader.
+\newblock Multithreaded community monitoring for massive streaming graph data.
+\newblock In {\em Parallel and Distributed Processing Symposium Workshops \&
+  PhD Forum (IPDPSW), 2013 IEEE 27th International}, pages 1646--1655. IEEE,
+  2013.
+
+\bibitem{psmrotar}
+V.~I. Rotar.
+\newblock {\em Probability and Stochastic Modeling}.
+\newblock CRC Press, 2013.
+
+\bibitem{salakhutdinov2007semantic}
+R.~Salakhutdinov and G.~Hinton.
+\newblock Semantic hashing.
+\newblock {\em RBM}, 500(3):500, 2007.
+
+\bibitem{srivastava2014dropout}
+N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov.
+\newblock Dropout: A simple way to prevent neural networks from overfitting.
+\newblock {\em The Journal of Machine Learning Research}, 15(1):1929--1958,
+  2014.
+
+\bibitem{sutskever2007learning}
+I.~Sutskever and G.~E. Hinton.
+\newblock Learning multilevel distributed representations for high-dimensional
+  sequences.
+\newblock In {\em International Conference on Artificial Intelligence and
+  Statistics}, pages 548--555, 2007.
+
+\bibitem{sutskever2014sequence}
+I.~Sutskever, O.~Vinyals, and Q.~V. Le.
+\newblock Sequence to sequence learning with neural networks.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  3104--3112, 2014.
+
+\bibitem{teh2006hierarchical}
+Y.~W. Teh, M.~I. Jordan, M.~J. Beal, and D.~M. Blei.
+\newblock Hierarchical dirichlet processes.
+\newblock {\em Journal of the american statistical association}, 101(476),
+  2006.
+
+\bibitem{wang2014introduction}
+H.~Wang.
+\newblock Introduction to word2vec and its application to find predominant word
+  senses.
+\newblock 2014.
+
+\bibitem{yun2014streaming}
+S.-Y. Yun, A.~Proutiere, et~al.
+\newblock Streaming, memory limited algorithms for community detection.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  3167--3175, 2014.
+
+\bibitem{zaremba2014recurrent}
+W.~Zaremba, I.~Sutskever, and O.~Vinyals.
+\newblock Recurrent neural network regularization.
+\newblock {\em arXiv preprint arXiv:1409.2329}, 2014.
+
+\end{thebibliography}
