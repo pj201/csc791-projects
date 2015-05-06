@@ -460,6 +460,33 @@ console.log("data.assignment : " + data.assignment.toString());
           }
           }
         }
+         socket.emit('ShowHeavyHitters', {  g1url1 : cand[0][0].url , g1count1 : cand[0][0].count,
+                 g1url2 : cand[0][1].url , g1count2 : cand[0][1].count,
+                  g1url3 : cand[0][2].url , g1count3 : cand[0][2].count,
+                 g2url1 : cand[1][0].url , g2count1 : cand[1][0].count,
+                 g2url2 : cand[1][1].url , g2count2 : cand[1][1].count,
+                 g2url3 : cand[1][2].url , g2count3 : cand[1][2].count,
+                 g3url1 : cand[2][0].url , g3count1 : cand[2][0].count,
+                 g3url2 : cand[2][1].url , g3count2 : cand[2][1].count,
+                 g3url3 : cand[2][2].url , g3count3 : cand[2][2].count,
+                 
+               });
+
+
+console.log("@@@@@@@@@@@@@@" + cand[0][0].url + ':' + cand[0][0].count);
+console.log("@@@@@@@@@@@@@@" + cand[0][1].url + ':' + cand[0][1].count);
+console.log("@@@@@@@@@@@@@@" + cand[0][2].url + ':' + cand[0][2].count);
+console.log("@@@@@@@@@@@@@@" + cand[1][0].url + ':' + cand[1][0].count);
+console.log("@@@@@@@@@@@@@@" + cand[1][1].url + ':' + cand[1][1].count);
+console.log("@@@@@@@@@@@@@@" + cand[1][2].url + ':' + cand[1][2].count);
+console.log("@@@@@@@@@@@@@@" + cand[2][0].url + ':' + cand[2][0].count);
+console.log("@@@@@@@@@@@@@@" + cand[2][1].url + ':' + cand[2][1].count);
+console.log("@@@@@@@@@@@@@@" + cand[2][2].url + ':' + cand[2][2].count);
+
+
+
+
+
       }
     }); 
 

@@ -10,6 +10,10 @@ html
       {
       background-color:#ffffff;
       }
+      .BlueBG
+      {
+      background-color:#55ACEE;
+      }
   body(style='background-color:#55ACEE')
     h1(align='center', style='color: #FFFFFF; font-weight: bold') Journaling Situational Awareness Dashboard
     h3(align='center', style='color: #FFFFFF; font-weight: bold') (for CSC591/791 Advanced Algorithms class - showing URL data only)
@@ -24,7 +28,7 @@ html
           div
             table(style='width:100%', border-width='2', border='2', align='center')
               tr
-                td(colspan='2')
+                td.BlueBG(colspan='2')
                   h4  Real-time Top-K Heavy Hitters using Count-Min Sketch
               tr
                 td(align='center', width='80%')
@@ -56,6 +60,75 @@ html
                   #div_url5
                 td(align='center')
                   #div_count5
+      tr
+        td.BlueBG(colspan='2')
+          h4  Top-3 Most Frequently Viewed Page Groups:
+      tr
+      tr
+        td.WhiteBG(colspan='2', align='center')
+          | Group 1
+      td.WhiteBG(colspan='2')
+        div
+          table(width='100%', border-width='2', border='2', align='center')
+            tr
+              td(width='80%', align='center')
+                #div1URL1
+              td(width='20%', align='center')
+                #div1count1
+            tr
+              td(width='80%', align='center')
+                #div1URL2
+              td(width='20%', align='center')
+                #div1count2
+            tr
+              td(width='80%', align='center')
+                #div1URL3
+              td(width='20%', align='center')
+                #div1count3
+      tr
+        td.WhiteBG(colspan='2', align='center')
+          | Group 2
+      tr
+        td.WhiteBG(colspan='2')
+          div
+            table(width='100%', border-width='2', border='2', align='center')
+              tr
+                td(width='80%', align='center')
+                  #div2URL1
+                td(width='20%', align='center')
+                  #div2count1
+              tr
+                td(width='80%', align='center')
+                  #div2URL2
+                td(width='20%', align='center')
+                  #div2count2
+              tr
+                td(width='80%', align='center')
+                  #div2URL3
+                td(width='20%', align='center')
+                  #div2count3
+      tr
+        td.WhiteBG(colspan='2', align='center')
+          | Group 3
+      tr
+        td.WhiteBG(colspan='2')
+          div
+            table(width='100%', border-width='2', border='2', align='center')
+              tr
+                td(width='80%', align='center')
+                  #div3URL1
+                td(width='20%', align='center')
+                  #div3count1
+              tr
+                td(width='80%', align='center')
+                  #div3URL2
+                td(width='20%', align='center')
+                  #div3count2
+              tr
+                td(width='80%', align='center')
+                  #div3URL3
+                td(width='20%', align='center')
+                  #div3count3
       tr
         td
           div

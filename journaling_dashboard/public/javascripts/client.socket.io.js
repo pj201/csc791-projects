@@ -64,6 +64,34 @@ server.on('ShowTopK', function(data){
 
 });
 
+
+server.on('ShowHeavyHitters', function(data){
+	console.log("data available for Heavy Hitters...");
+	console.log(data.toString());
+	console.log(data.g1url1.toString());
+	document.getElementById("div1URL1").innerHTML = data.g1url1;
+	document.getElementById("div1URL2").innerHTML = data.g1url2;
+	document.getElementById("div1URL3").innerHTML = data.g1url3;
+	document.getElementById("div2URL1").innerHTML = data.g2url1;
+	document.getElementById("div2URL2").innerHTML = data.g2url2;
+	document.getElementById("div2URL3").innerHTML = data.g2url3;
+	document.getElementById("div3URL1").innerHTML = data.g3url1;
+	document.getElementById("div3URL2").innerHTML = data.g3url2;
+	document.getElementById("div3URL3").innerHTML = data.g3url3;
+	
+	document.getElementById("div1count1").innerHTML = data.g1count1;
+	document.getElementById("div1count2").innerHTML = data.g1count2;
+	document.getElementById("div1count3").innerHTML = data.g1count3;
+	document.getElementById("div2count1").innerHTML = data.g2count1;
+	document.getElementById("div2count2").innerHTML = data.g2count2;
+	document.getElementById("div2count3").innerHTML = data.g2count3;
+	document.getElementById("div3count1").innerHTML = data.g3count1;
+	document.getElementById("div3count2").innerHTML = data.g3count2;
+	document.getElementById("div3count3").innerHTML = data.g3count3;
+
+});
+
+
 function ClickFun(){
 	alert("Welcome to the Journaling Situational Awareness Dashboard, developed by Paul Jones, Dakota Medd, Kshitij Sharma and Nitin Tak for the CSC591/791 Advanced Algorithms class Capstone Project!\n\nYou should be seeing five display areas containing the following near real-time displays: (1) [top] Top-5 heavy hitting URLs submitted over the past week - the list updates dynamically (via Socket.IO) and is derived from a Count-Min Sketch in Javascript, (2) [middle left] Time series plot of activity for a given user (make a selection via the drop-down list) or for ALL users; it also includes a Holt-Winters Activity prediction for the next 10 hours, (3) [middle right] Time series plot of activity for a given assignment (or for ALL assignments), and a corresponding HW prediction for the next 10 hours, (4) [bottom left] Support-Confidence plot derived from APRIORI association rules for a given user or assignment, (5) [bottom right] Graphical illustration of the top 3 rules found for each user or assignment - the size of intermediate circles represents the Support (bigger means higher Support); the color represents the Lift or relevance (darker means higher Lift).\n\nTo see some illustrative cases, try Users 'pjones' (well-behaved), 'drmedd' (semi-degenerate), and 'shsu3' (degenerate). Also try 'Project 3' for a nice illustration of a time series for a specific assignment. Note that the graphical displays can take a few seconds to update depending on server and connection speeds.\n\nRefer to the project report for full details.");
       document.getElementById("csv_student").innerHTML = "This is spaceholder for CSV file..";
