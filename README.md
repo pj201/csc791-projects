@@ -26,6 +26,9 @@ To install:
 * cd ../journaling_dashboard
 * sudo npm install
 
+** If you get an error saying 'cannot find module ./types.json', then type:
+   sudo npm install express
+
 --------------------------------------------------
 
 To run:
