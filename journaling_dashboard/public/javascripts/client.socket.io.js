@@ -45,6 +45,23 @@ server.on('ShowTopK', function(data){
 	document.getElementById("div_count3").innerHTML = data.count3;
 	document.getElementById("div_count4").innerHTML = data.count4;
 	document.getElementById("div_count5").innerHTML = data.count5;
+
+	var HeavyHitterURL= document.getElementById("liHeavyHitterURL");
+	var HeavyHitterCount= document.getElementById("liHeavyHitterCount");
+
+	// HeavyHitterURL.prepend('<li>' + data.url5 + '<li>');
+	// HeavyHitterCount.prepend('<li>' + data.count5 + '<li>');
+	// HeavyHitterURL.prepend('<li>' + data.url4 + '<li>');
+	// HeavyHitterCount.prepend('<li>' + data.count4 + '<li>');
+	// HeavyHitterURL.prepend('<li>' + data.url3 + '<li>');
+	// HeavyHitterCount.prepend('<li>' + data.count3 + '<li>');
+	// HeavyHitterURL.prepend('<li>' + data.url2 + '<li>');
+	// HeavyHitterCount.prepend('<li>' + data.count2 + '<li>');
+	// HeavyHitterURL.prepend('<li>' + data.url1 + '<li>');
+	// HeavyHitterCount.prepend('<li>' + data.count1 + '<li>');
+
+	//         HeavyHitterCount.children('li').slice(4).remove();
+
 });
 
 function ClickFun(){
