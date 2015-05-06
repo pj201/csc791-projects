@@ -1,3 +1,5 @@
+//Authors: Paul Jones, Nitin Tak, Kshitij Sharma
+ 
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -17,13 +19,13 @@ var request = require('request');
 var createCountMinSketch = require("count-min-sketch");
 var tranSketch = createCountMinSketch();
 
-// Initializing variables for Journaling Pre-processing.
+//@author Kshitij Sharma: Initializing variables for Journaling Pre-processing.
 
-var inActiv = 3600000;
-var prevEvtTime=0;
-var transId = 0;
+var inActiv = 3600000; // Idle time threshold in milliseconds
+var prevEvtTime=0; // Stores the previous Event time for a transaction
+var transId = 0; // Store Transaction Id
 
-// Defining Curl Headers
+//@author Kshitij Sharma: Defining Curl Headers
 presentTime = (new Date).getTime();
 previousTime = presentTime  - 2592000000;
 
@@ -40,14 +42,14 @@ var curlBody = {'type':'find',
         };
 
 
-// This function sorts and removes duplicates from each transaction.
+//@author Kshitij Sharma: This function sorts and removes duplicates from each transaction.
    function purge(a) {
       return a.sort().filter(function(item, pos, ary) {
          return !pos || item != ary[pos - 1];
      })
  }
 
-// Priority Queue with TopK implementation using Sketches
+//@author Kshitij Sharma: Custom comparator to fetch count from count-min sketch
 function compare(a,b) {
   if (tranSketch.query(a.url) > tranSketch.query(b.url))
      return -1;
@@ -55,7 +57,7 @@ function compare(a,b) {
     return 1;
   return 0;
 } 
-
+//@author Kshitij Sharma: Priority Queue with TopK implementation using Sketches
 var enq = function(arr, a) {
     var index = -1;
   for(i=0; i < arr.length; i++) {
@@ -74,7 +76,9 @@ var enq = function(arr, a) {
          }
 }
 
-// Custom indexOf function.
+//@author Kshitij Sharma: Custom indexOf() function for Nested Arrays.
+//Modified an existing stackoverflow answer.
+//http://stackoverflow.com/questions/8668174/indexof-method-in-an-object-array
 function arrayObjectIndexOf(myArray, searchTerm, property) {
     for(var i = 0, len = myArray.length; i < len; i++) {
      for(var k = 0; k < myArray[i].length; k++) {
@@ -84,7 +88,7 @@ function arrayObjectIndexOf(myArray, searchTerm, property) {
     }
     return -1;
 }
-
+//@author Kshitij Sharma: Generate Candidate item set using Apriori principle
 var GenerateCandidate = function(array, setSize) {
 var newArray=[];
 for(i=0; i < array.length; i++){
@@ -107,7 +111,8 @@ for(i=0; i < array.length; i++){
  return newArray;
 }
 
- 
+//@author Kshitij Sharma: This function creates all the k-1 item subsets of a k item set.
+// Modified an existing stackoverflow answer. http://stackoverflow.com/questions/24992000/recursively-constructing-a-javascript-array-of-all-possible-combinations-while-r
 var sets = function(input, size){
     var results = [], result, mask, total = Math.pow(2, input.length);
     for(mask = 0; mask < total; mask++){
@@ -143,111 +148,11 @@ var opts = {cwd: process.cwd(), // + '/public/rscripts',
             env: process.env
             };
 
-
-
-/*calling R code and displaying content on client..*/
-//Begin Section
-//http://leapon.tumblr.com/post/10168944986/run-r-script-and-display-graph-using-node-js
-var exec = require('child_process').exec;
-// var server = express(); //.createServer();
-// server.configure(function(){    
-//     server.use(express.static(__dirname + '/public/rscripts'));
-// });
-/*
-app.get('/', function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write('R graph<br>');
-    process.env.R_WEB_DIR = process.cwd() + '/public/rscripts';
-    var child = exec('Rscript ./public/rscripts/graph.R', function(error, stdout, stderr) {
-        console.log('stdout: ' + stdout);
-        console.log('stderr: ' + stderr);
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
-        res.write('<img src='+process.cwd() +"/public/rscripts/xyplot.png" + '/>');
-        // res.write('<img src="/xyplot.png"/>');
-        res.end('<br>end of R script');
-    });
-});
-app.listen(1337, "127.0.0.1");
-console.log('Server running at http://127.0.0.1:1337/');
-*/
-//End Section
-
-
 //logic for top-k over URL's using count-min-sketch and priority Queue..
 //Begin Section
-/*
-var createCountMinSketch = require("count-min-sketch");
-var sketch = createCountMinSketch();
-var URLs = ['A','B','C','A'];
-var smallGrp = [];
-smallGrp.push(URLs[2]);
-smallGrp.push(URLs[1]);
-smallGrp.push(URLs[0]);
-
-console.log(smallGrp);
-smallGrp.sort();
-console.log("after sorting: " + smallGrp);
-
-console.log("updating a count min sketch..");
-for(var i=0; i<URLs.length ; i++)
-{
-  console.log("URL: " + URLs[i].toString());
-  sketch.update(URLs[i].toString(), 1);
-}
-console.log("querying sketch for A : " + sketch.query('A'));
-console.log("querying sketch for B : " + sketch.query('B'));
-console.log("querying sketch for C : " + sketch.query('C'));
-console.log("querying sketch for D : " + sketch.query('D'));
-var queue = new PriorityQueue();
-
-*/
-/*Algorithm...
-1. decide on the maxumum size of priority Queue
-MAX_Q_SIZE to contain number of elements..
-2. Check the count of the element in sketch.
-3. loop into the priority Q and check if the element 
-is present, if present then update the element in priority Q.
-
-
-*/
-//End Section..
-
-
-/*Call to journialing service..*/
-//Begin Section..
-/*
-request({
-    url: 'https://las-skylr-token.oscar.ncsu.edu/api/data/document/query', //URL to hit
-    method: 'POST',
-    body: {
-'type':'find',
-  'query':{'data.UserId':'pjones',
-            'data.ProjId':"journaling-chrome",
-              'data.EvtTime':{"$gte":1423717200000,
-                              "$lte":1424303540000}}
-    },
-    headers:
-    {
-    'Content-Type': 'application/json', 
-    'AuthToken':'9c0c9a9e0ec177d2bf9fd55edff5272cb2a3b9823babf07d6f762e3f9c9509bb'
-    },
-    json : true
-}, function(error, response, body){
-  console.log("nitinnnnnnnnnn is awesome...");
-    if(error) {
-        console.log(error);
-    } else {
-        console.log(response.statusCode, body);
-}
-});
-*/
-//End Section..
-
 
 /*Journaling Dashboard...*/
-//Begin Section..
+//@author Nitin Tak:Begin Section..
 var server = require( 'http' ).createServer(app);
 var port = 3000;
 server.listen(port);
@@ -257,15 +162,7 @@ console.log("Dashboard server listening at http://127.0.0.1: "+port);
 var sio = require( 'socket.io' ).listen(server);
 sio.sockets.on('connection', function(socket){
     console.log('Dashboard client connected...');
-    
-    
-  
-  
-  
-  
-  
-  
-    socket.on('GetUserData', function(data){
+        socket.on('GetUserData', function(data){
       console.log('request received from client: ' + data.username.toString());
 
       //call the rscript for this user..
@@ -316,7 +213,7 @@ console.log("pathOfR : " + pathOfR);
     });
     
 
-//for fetcing the assignment data event handler..
+//@author Nitin Tak:for fetcing the assignment data event handler..
 socket.on('GetAssignmentData', function(data){
       console.log('request received from client: ' + data.assignment.toString());
 
@@ -345,7 +242,7 @@ console.log("data.assignment : " + data.assignment.toString());
           }
           return null;
       });
-      //called after exit call
+      //@author Nitin Tak :called after exit call
       R.on('close', function(code){
         console.log("process code on call to 'close': " + code);  //code 0 for success....
         if(code == 0)
@@ -366,7 +263,7 @@ console.log("data.assignment : " + data.assignment.toString());
     });
 
 
- //on completion of top-k analysis, emmit the results to the output..
+ //@author Kshitij Sharma and Nitin: on completion of top-k analysis, emmit the results to the output..
     setInterval(function(){
       request.post({
       url: skylrUrl, //URL to hit
@@ -400,9 +297,9 @@ console.log("data.assignment : " + data.assignment.toString());
           urlList.push(WebURL);
           prevEvtTime = EvtTime;
         }
-        // Creating priority Queue
+        //@author Kshitij Sharma: Creating priority Queue
         var topK = [];
-        // Creating 1-itemset Sketch
+        //@author Kshitij Sharma: Creating 1-itemset Sketch
         for(i=0; i < journArray.length; i++) {
           for(j=0; j < journArray[i].url.length; j++){
           tranSketch.update(journArray[i].url[j], 1);
@@ -416,21 +313,8 @@ console.log("data.assignment : " + data.assignment.toString());
                  url4 : topK[3].url , count4 : topK[3].count,
                  url5 : topK[4].url , count5 : topK[4].count});
 
-
-   console.log("^^^^^^^^^^^^^^^^^^^^^^^^*" + topK[0].url );
-   console.log("***************************" + topK[1].url );
-   console.log("***************************" + topK[2].url );
-   console.log("***************************" + topK[3].url );
-   console.log("***************************" + topK[4].url );
-   console.log("^^^^^^^^^^^^^^^^^^^^^^^^*" + topK[0].count );
-   console.log("***************************" + topK[1].count );
-   console.log("***************************" + topK[2].count );
-   console.log("***************************" + topK[3].count);
-   console.log("***************************" + topK[4].count);
-
-
-
-        // Creating 2-itemset TopK
+  console.log("Length of a 1-set frequent itemset" + topK.length);
+        //@author Kshitij Sharma: Creating 2-itemset TopK
         var topK2 = [];            
         for( i=0; i< topK.length; i++)
         {
@@ -440,8 +324,8 @@ console.log("data.assignment : " + data.assignment.toString());
           topK2.push(set);
           }
         }
-
-        // Create 3-itemset topK
+  
+        //@author Kshitij Sharma:  Create 3-itemset topK
         var pruned = [];
         var cand = GenerateCandidate(topK2,2);
         var flag = 0;
@@ -460,6 +344,7 @@ console.log("data.assignment : " + data.assignment.toString());
           }
           }
         }
+  //@author Nitin Tak: Emmiting data for top url groups
          socket.emit('ShowHeavyHitters', {  g1url1 : cand[0][0].url , g1count1 : cand[0][0].count,
                  g1url2 : cand[0][1].url , g1count2 : cand[0][1].count,
                   g1url3 : cand[0][2].url , g1count3 : cand[0][2].count,
@@ -473,20 +358,7 @@ console.log("data.assignment : " + data.assignment.toString());
                });
 
 
-console.log("@@@@@@@@@@@@@@" + cand[0][0].url + ':' + cand[0][0].count);
-console.log("@@@@@@@@@@@@@@" + cand[0][1].url + ':' + cand[0][1].count);
-console.log("@@@@@@@@@@@@@@" + cand[0][2].url + ':' + cand[0][2].count);
-console.log("@@@@@@@@@@@@@@" + cand[1][0].url + ':' + cand[1][0].count);
-console.log("@@@@@@@@@@@@@@" + cand[1][1].url + ':' + cand[1][1].count);
-console.log("@@@@@@@@@@@@@@" + cand[1][2].url + ':' + cand[1][2].count);
-console.log("@@@@@@@@@@@@@@" + cand[2][0].url + ':' + cand[2][0].count);
-console.log("@@@@@@@@@@@@@@" + cand[2][1].url + ':' + cand[2][1].count);
-console.log("@@@@@@@@@@@@@@" + cand[2][2].url + ':' + cand[2][2].count);
-
-
-
-
-
+console.log("Number of 3 itemset rules " + cand.length);
       }
     }); 
 
@@ -547,6 +419,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
+ 
 
 module.exports = app;
